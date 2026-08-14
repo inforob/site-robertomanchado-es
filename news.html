@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>News — BizNiz Corp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="page">
+  <div class="shell">
+
+    <!-- ==================== HEADER ==================== -->
+    <header class="site-header">
+      <div class="header-waves" aria-hidden="true">
+        <svg viewBox="0 0 940 112" preserveAspectRatio="none">
+          <path d="M0,86 C160,40 300,104 460,72 C620,40 780,96 940,58 L940,112 L0,112 Z" fill="#ffffff" opacity=".025"/>
+          <path d="M0,64 C180,110 320,26 500,54 C680,82 800,30 940,46" fill="none" stroke="#ffffff" stroke-opacity=".05" stroke-width="1"/>
+          <path d="M0,52 C200,96 340,16 520,44 C700,72 820,20 940,34" fill="none" stroke="#ffffff" stroke-opacity=".035" stroke-width="1"/>
+        </svg>
+      </div>
+
+      <!-- navegación secundaria superior -->
+      <nav class="top-nav" aria-label="Navegación secundaria">
+        <ul>
+          <li><a href="index.html"><span class="chev" aria-hidden="true"></span>HOME</a></li>
+          <li><a href="#"><span class="chev" aria-hidden="true"></span>SITEMAP</a></li>
+          <li><a href="#"><span class="chev" aria-hidden="true"></span>CONTACT US</a></li>
+        </ul>
+      </nav>
+
+      <!-- logo -->
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40">
+            <defs>
+              <linearGradient id="leafG" x1="0" y1="1" x2="1" y2="0">
+                <stop offset="0" stop-color="#3f7d10"/>
+                <stop offset=".45" stop-color="#7fbe22"/>
+                <stop offset="1" stop-color="#c6e94b"/>
+              </linearGradient>
+            </defs>
+            <path d="M4 33 C6 16 18 5 36 4 C34 20 24 31 8 33 Z" fill="url(#leafG)"/>
+            <path d="M6 33 C14 22 24 13 35 6" fill="none" stroke="#2c5c0b" stroke-width="1.6" opacity=".55"/>
+            <path d="M13 30 C15 22 20 15 27 10" fill="none" stroke="#eaffb0" stroke-width="1" opacity=".45"/>
+          </svg>
+        </span>
+        <span class="brand-text"><span class="brand-light">BizNiz</span> <span class="brand-bold">Corp</span></span>
+      </a>
+
+      <!-- bloque teléfono -->
+      <div class="callbox">
+        <span class="callbox-glow" aria-hidden="true"></span>
+        <span class="callbox-headset" aria-hidden="true">
+          <svg viewBox="0 0 120 96">
+            <!-- diadema -->
+            <path d="M14 62 C10 26 38 8 66 12 C94 16 108 38 104 62"
+                  fill="none" stroke="#0c1509" stroke-width="7" stroke-linecap="round"/>
+            <!-- almohadilla izquierda -->
+            <ellipse cx="14" cy="70" rx="8" ry="11" fill="#0c1509"/>
+            <!-- auricular derecho -->
+            <ellipse cx="103" cy="66" rx="15" ry="19" fill="#0c1509"/>
+            <ellipse cx="99" cy="64" rx="8" ry="11" fill="#25361c" opacity=".65"/>
+            <!-- brazo del micrófono -->
+            <path d="M97 80 C88 92 70 94 56 90"
+                  fill="none" stroke="#0c1509" stroke-width="4" stroke-linecap="round"/>
+            <ellipse cx="53" cy="89" rx="7" ry="5" fill="#0c1509"/>
+          </svg>
+        </span>
+        <span class="callbox-label">CALL NOW!</span>
+        <a class="callbox-phone" href="tel:+18887768364">1 888 776 8364</a>
+      </div>
+    </header>
+
+    <!-- ==================== MENÚ PRINCIPAL ==================== -->
+    <div class="mainnav-wrap">
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav">
+        <span class="nav-toggle-bars" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>MENU</span>
+      </button>
+      <nav class="mainnav" id="mainNav" aria-label="Navegación principal">
+        <ul>
+          <li><a href="index.html">ABOUT US</a></li>
+          <li><a href="#">SERVICES</a></li>
+          <li><a href="#">PRODUCTS</a></li>
+          <li><a href="#">DEALERS</a></li>
+          <li><a href="#">CAREERS</a></li>
+          <li><a href="news.html" class="is-active">NEWS</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- ==================== BANDA DE TÍTULO ==================== -->
+    <section class="hero hero--page">
+      <div class="hero-waves" aria-hidden="true">
+        <svg viewBox="0 0 940 118" preserveAspectRatio="none">
+          <g fill="none" stroke="#ffffff" stroke-opacity=".3">
+            <path d="M-20,70 C160,18 300,72 470,42 C640,12 790,40 960,10" stroke-width="1.2"/>
+            <path d="M-20,80 C160,28 300,82 470,52 C640,22 790,50 960,20" stroke-width="1"/>
+            <path d="M-20,90 C160,38 300,92 470,62 C640,32 790,60 960,30" stroke-width=".9"/>
+            <path d="M-20,101 C160,49 300,102 470,72 C640,42 790,70 960,40" stroke-width=".8"/>
+          </g>
+          <path d="M-20,96 C150,40 310,98 480,62 C650,26 800,54 960,24 L960,0 L-20,0 Z" fill="#ffffff" opacity=".05"/>
+          <path d="M-20,112 C170,58 300,114 470,80 C640,46 800,72 960,44" fill="none" stroke="#dbff7a" stroke-opacity=".22" stroke-width="2"/>
+        </svg>
+      </div>
+
+      <div class="pagehead">
+        <h1 class="pagehead-title">News</h1>
+        <nav class="breadcrumb" aria-label="Migas de pan">
+          <a href="index.html">Home</a>
+          <span class="breadcrumb-sep" aria-hidden="true"></span>
+          <span aria-current="page">News</span>
+        </nav>
+      </div>
+
+      <div class="pagehead-art" aria-hidden="true">
+        <svg viewBox="0 0 300 118">
+          <defs>
+            <linearGradient id="paperG" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#c4cbc6"/>
+            </linearGradient>
+            <linearGradient id="paperG2" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#f2f4ee"/><stop offset="1" stop-color="#a9b1ab"/>
+            </linearGradient>
+          </defs>
+          <!-- periódicos apilados -->
+          <g transform="translate(168,26) rotate(-8)">
+            <rect width="104" height="76" rx="2" fill="url(#paperG2)"/>
+            <g fill="#9aa39c"><rect x="8" y="10" width="88" height="3"/><rect x="8" y="18" width="70" height="3"/></g>
+          </g>
+          <g transform="translate(150,18) rotate(4)">
+            <rect width="112" height="82" rx="2" fill="url(#paperG)"/>
+            <rect x="9" y="8" width="94" height="13" fill="#39424a"/>
+            <g fill="#aeb6b0">
+              <rect x="9" y="27" width="44" height="3"/><rect x="9" y="34" width="44" height="3"/>
+              <rect x="9" y="41" width="44" height="3"/><rect x="9" y="48" width="44" height="3"/>
+              <rect x="9" y="55" width="30" height="3"/>
+            </g>
+            <rect x="59" y="27" width="44" height="31" fill="#6d8394"/>
+            <path d="M59 58 L72 44 L81 51 L90 42 L103 58 Z" fill="#93a7b5"/>
+            <g fill="#aeb6b0">
+              <rect x="59" y="64" width="44" height="3"/><rect x="9" y="64" width="44" height="3"/>
+              <rect x="59" y="71" width="30" height="3"/><rect x="9" y="71" width="36" height="3"/>
+            </g>
+          </g>
+          <ellipse cx="205" cy="106" rx="72" ry="7" fill="#1d2b0c" opacity=".28"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ==================== CONTENIDO ==================== -->
+    <section class="panels">
+
+      <!-- ---------- columna principal: listado de noticias ---------- -->
+      <article class="panel panel--news">
+        <header class="panel-head">
+          <h2><span class="thin">Latest</span> <span class="bold">News</span></h2>
+        </header>
+
+        <div class="panel-body">
+
+          <article class="news-item">
+            <a class="news-thumb" href="#" aria-label="Leer: BizNiz Corp opens a new distribution centre">
+              <svg viewBox="0 0 116 88" aria-hidden="true">
+                <rect width="116" height="88" fill="#31505f"/>
+                <rect x="5" y="5" width="106" height="78" fill="#22394a"/>
+                <path d="M5 83 L34 50 L52 66 L70 46 L111 83 Z" fill="#3d6073"/>
+                <circle cx="32" cy="26" r="10" fill="#7fa2b4"/>
+                <g stroke="#4d7183" stroke-width="1" opacity=".85">
+                  <path d="M5 5 L111 83 M111 5 L5 83"/>
+                </g>
+                <rect x="5" y="5" width="106" height="78" fill="none" stroke="#5b8296"/>
+              </svg>
+            </a>
+            <div class="news-text">
+              <p class="news-date">12 <span>March</span> 2010</p>
+              <h3 class="news-title"><a href="#">BizNiz Corp opens a new distribution centre</a></h3>
+              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonumy
+                 nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi
+                 enim ad minim veniam, quis nostrud exerci. <a href="#" class="more">More&gt;</a></p>
+            </div>
+          </article>
+
+          <article class="news-item">
+            <a class="news-thumb" href="#" aria-label="Leer: Annual results exceed market expectations">
+              <svg viewBox="0 0 116 88" aria-hidden="true">
+                <rect width="116" height="88" fill="#31505f"/>
+                <rect x="5" y="5" width="106" height="78" fill="#22394a"/>
+                <g fill="#3d6073">
+                  <rect x="18" y="52" width="14" height="31"/><rect x="38" y="40" width="14" height="43"/>
+                  <rect x="58" y="28" width="14" height="55"/><rect x="78" y="18" width="14" height="65"/>
+                </g>
+                <path d="M18 58 L45 44 L65 32 L92 16" fill="none" stroke="#a4d63c" stroke-width="2"/>
+                <g stroke="#4d7183" stroke-width="1" opacity=".85">
+                  <path d="M5 5 L111 83 M111 5 L5 83"/>
+                </g>
+                <rect x="5" y="5" width="106" height="78" fill="none" stroke="#5b8296"/>
+              </svg>
+            </a>
+            <div class="news-text">
+              <p class="news-date">28 <span>February</span> 2010</p>
+              <h3 class="news-title"><a href="#">Annual results exceed market expectations</a></h3>
+              <p>Sed diam nonumy nibh euismod tincidunt ut laoreet dolore magna aliquam erat
+                 volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper
+                 suscipit lobortis nisl ut aliquip. <a href="#" class="more">More&gt;</a></p>
+            </div>
+          </article>
+
+          <article class="news-item">
+            <a class="news-thumb" href="#" aria-label="Leer: New partnership agreement signed in Europe">
+              <svg viewBox="0 0 116 88" aria-hidden="true">
+                <rect width="116" height="88" fill="#31505f"/>
+                <rect x="5" y="5" width="106" height="78" fill="#22394a"/>
+                <circle cx="58" cy="44" r="27" fill="#3d6073"/>
+                <g fill="#7fa2b4">
+                  <path d="M40 32 C46 27 54 28 57 33 C60 38 53 42 47 43 C41 44 37 38 40 32 Z"/>
+                  <path d="M62 48 C67 45 72 49 73 55 C74 62 69 68 65 65 C61 62 58 51 62 48 Z"/>
+                </g>
+                <circle cx="58" cy="44" r="27" fill="none" stroke="#a4d63c" stroke-opacity=".5"/>
+                <g stroke="#4d7183" stroke-width="1" opacity=".85">
+                  <path d="M5 5 L111 83 M111 5 L5 83"/>
+                </g>
+                <rect x="5" y="5" width="106" height="78" fill="none" stroke="#5b8296"/>
+              </svg>
+            </a>
+            <div class="news-text">
+              <p class="news-date">04 <span>February</span> 2010</p>
+              <h3 class="news-title"><a href="#">New partnership agreement signed in Europe</a></h3>
+              <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie
+                 consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et
+                 accumsan et iusto odio. <a href="#" class="more">More&gt;</a></p>
+            </div>
+          </article>
+
+          <article class="news-item">
+            <a class="news-thumb" href="#" aria-label="Leer: Product line receives an industry award">
+              <svg viewBox="0 0 116 88" aria-hidden="true">
+                <rect width="116" height="88" fill="#31505f"/>
+                <rect x="5" y="5" width="106" height="78" fill="#22394a"/>
+                <path d="M44 20 H72 V40 C72 52 66 58 58 58 C50 58 44 52 44 40 Z" fill="#c9d0d4"/>
+                <path d="M44 24 H34 V32 C34 40 39 44 45 44" fill="none" stroke="#c9d0d4" stroke-width="3"/>
+                <path d="M72 24 H82 V32 C82 40 77 44 71 44" fill="none" stroke="#c9d0d4" stroke-width="3"/>
+                <rect x="53" y="58" width="10" height="10" fill="#9aa3a8"/>
+                <rect x="44" y="68" width="28" height="6" rx="1" fill="#c9d0d4"/>
+                <path d="M58 28 L61 35 L68 35 L62 39 L64 46 L58 42 L52 46 L54 39 L48 35 L55 35 Z" fill="#a4d63c"/>
+                <g stroke="#4d7183" stroke-width="1" opacity=".85">
+                  <path d="M5 5 L111 83 M111 5 L5 83"/>
+                </g>
+                <rect x="5" y="5" width="106" height="78" fill="none" stroke="#5b8296"/>
+              </svg>
+            </a>
+            <div class="news-text">
+              <p class="news-date">19 <span>January</span> 2010</p>
+              <h3 class="news-title"><a href="#">Product line receives an industry award</a></h3>
+              <p>Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming
+                 id quod mazim placerat facer possim assum. Typi non habent claritatem insitam
+                 est usus legentis. <a href="#" class="more">More&gt;</a></p>
+            </div>
+          </article>
+
+          <!-- paginación -->
+          <nav class="pager" aria-label="Paginación de noticias">
+            <button class="pager-arrow" id="pagerPrev" aria-label="Página anterior" disabled>
+              <svg viewBox="0 0 12 20" aria-hidden="true"><path d="M9.5 1 L2 10 L9.5 19" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+            </button>
+            <ol class="pager-list">
+              <li><a href="#" class="is-current" aria-current="page">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">4</a></li>
+            </ol>
+            <button class="pager-arrow" id="pagerNext" aria-label="Página siguiente">
+              <svg viewBox="0 0 12 20" aria-hidden="true"><path d="M2.5 1 L10 10 L2.5 19" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+            </button>
+          </nav>
+
+        </div>
+      </article>
+
+      <!-- ---------- columna lateral ---------- -->
+      <aside class="panel panel--aside">
+        <header class="panel-head">
+          <h2><span class="thin">News</span> <span class="bold">Archive</span></h2>
+        </header>
+
+        <div class="panel-body">
+          <ul class="arrow-list">
+            <li><a href="#">March 2010 <span class="count">(4)</span></a></li>
+            <li><a href="#">February 2010 <span class="count">(7)</span></a></li>
+            <li><a href="#">January 2010 <span class="count">(5)</span></a></li>
+            <li><a href="#">December 2009 <span class="count">(3)</span></a></li>
+            <li><a href="#">November 2009 <span class="count">(6)</span></a></li>
+          </ul>
+
+          <h3 class="aside-title">Categories</h3>
+          <ul class="arrow-list">
+            <li><a href="#">Company</a></li>
+            <li><a href="#">Products</a></li>
+            <li><a href="#">Dealers</a></li>
+            <li><a href="#">Events</a></li>
+          </ul>
+
+          <div class="subscribe">
+            <h3 class="aside-title">Newsletter</h3>
+            <p>Lorem ipsum dolor sit amet consectetuer adipiscing elit sed diam.</p>
+            <form class="subscribe-form" action="#" method="post">
+              <label class="sr-only" for="subscribeEmail">Email</label>
+              <input class="subscribe-input" id="subscribeEmail" type="email"
+                     name="email" placeholder="your@email.com" required>
+              <button class="btn-cta btn-cta--sm" type="submit">
+                <span>SUBSCRIBE</span>
+                <svg class="btn-cta-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1 L9 6 L3 11 Z" fill="#2f5c05"/></svg>
+              </button>
+            </form>
+          </div>
+        </div>
+      </aside>
+
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="site-footer">
+      <p>
+        <strong>Company Name</strong> <span class="sep">|</span> WS3B-85 One Avenue Drive P.O. Box 100
+        <span class="sep">|</span> Whitehouse Station, NJ 08889281
+        <span class="sep">|</span> Consumers/Clients 1-888-776-8364
+        <span class="sep">|</span> <a href="mailto:info@biznizcorp.com">info{a}biznizcorp.com</a>
+      </p>
+    </footer>
+
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -31,10 +31,13 @@
     });
   }
 
-  /* ---------- estado activo del menú principal ---------- */
+  /* ---------- estado activo del menú principal ----------
+     Sólo se intercepta el clic en las pestañas sin destino todavía
+     ("#"); las que apuntan a una página real navegan con normalidad. */
   var tabs = nav ? nav.querySelectorAll('a') : [];
   Array.prototype.forEach.call(tabs, function (tab) {
     tab.addEventListener('click', function (e) {
+      if (tab.getAttribute('href') !== '#') { return; }
       e.preventDefault();
       Array.prototype.forEach.call(tabs, function (t) { t.classList.remove('is-active'); });
       tab.classList.add('is-active');
