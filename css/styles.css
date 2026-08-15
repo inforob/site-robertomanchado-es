@@ -84,6 +84,24 @@ img{max-width:100%;display:block}
   margin:0 auto;
 }
 
+/* ---------- borde lateral difuminado ----------
+   Recortes reales del prototipo (32px a cada lado del shell):
+   · edge-left.png  / edge-right.png  = x 148..179 y 1120..1151, y 20..360
+   La franja se oscurece hacia el shell, con línea oscura y filo claro,
+   y se difumina verticalmente hacia arriba y hacia abajo, tal cual el
+   bitmap original — por eso se usa el recorte y no un gradiente CSS.  */
+.shell::before,
+.shell::after{
+  content:"";
+  position:absolute;top:2px;   /* y20 del prototipo (shell empieza en y18) */
+  width:32px;height:340px;
+  background-repeat:no-repeat;
+  background-position:0 0;
+  pointer-events:none;
+}
+.shell::before{left:-32px;background-image:url("../assets/edge-left.png")}
+.shell::after{right:-32px;background-image:url("../assets/edge-right.png")}
+
 /* =========================================================
    HEADER
    ========================================================= */
@@ -94,7 +112,7 @@ img{max-width:100%;display:block}
   background:
     radial-gradient(120% 180% at 18% 0%, #24404f 0%, rgba(36,64,79,0) 60%),
     linear-gradient(180deg,#1d3541 0%,#1a303c 55%,#15272f 100%);
-  border-radius:2px 2px 0 0;
+  border-radius:8px 8px 0 0;   /* radio muestreado del prototipo */
   box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
 }
 .header-waves{position:absolute;inset:0}
@@ -277,6 +295,7 @@ img{max-width:100%;display:block}
   padding-top:4px;
   background:var(--color-panel);
   border-top:1px solid var(--color-panel-edge);
+  border-radius:0 0 8px 8px;
   box-shadow:inset 0 1px 0 var(--color-panel-hi);
 }
 .panel{
@@ -353,6 +372,7 @@ img{max-width:100%;display:block}
   position:relative;
   padding:16px 30px 14px;
   border:1px solid rgba(255,255,255,.10);
+  border-radius:6px;
   background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,0));
   box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
 }
@@ -387,6 +407,7 @@ img{max-width:100%;display:block}
   margin-top:4px;
   padding:10px 20px;
   background:linear-gradient(180deg,#15232e 0%,#1a2c38 55%,#213745 100%);
+  border-radius:10px;
   box-shadow:0 1px 0 #4a6a7f;
   text-align:center;
 }
@@ -519,6 +540,8 @@ img{max-width:100%;display:block}
 @media (max-width:1000px){
   .page::before{display:none}
   .shell{max-width:calc(100% - 24px)}
+  /* sin sitio para los recortes laterales */
+  .shell::before,.shell::after{display:none}
 }
 
 @media (max-width:940px){
@@ -567,20 +590,78 @@ img{max-width:100%;display:block}
   .product-shot{max-width:240px}
 }
 
-/* menú principal colapsado */
-@media (max-width:820px){
-  .mainnav-wrap{height:auto}
+/* =========================================================
+   MENÚ MÓVIL POP
+   Hasta 940px (portrait y landscape de móvil/tablet pequeño)
+   las pestañas se ocultan; queda una barra con icono de
+   hamburguesa que abre un popup centrado sobre un velo.
+   ========================================================= */
+@media (max-width:940px){
+  .mainnav-wrap{height:50px}
   .nav-toggle{display:flex}
-  .mainnav{display:none;border-top:1px solid rgba(0,0,0,.3)}
-  .mainnav.is-open{display:block}
-  .mainnav ul{flex-direction:column;height:auto}
-  .mainnav li + li::before{
-    left:0;right:0;top:0;bottom:auto;width:auto;height:1px;border:0;
-    background:rgba(255,255,255,.12);
+
+  .mainnav{display:none}
+  .mainnav.is-open{
+    display:flex;
+    position:fixed;inset:0;z-index:80;  /* por encima del botón "Aa" */
+    align-items:center;justify-content:center;
+    padding:24px;
+    background:rgba(9,18,26,.72);
+    backdrop-filter:blur(4px);
+    -webkit-backdrop-filter:blur(4px);
   }
-  .mainnav a{height:50px;padding:0 52px 0 18px}
-  .tab-dots{top:50%;right:14px;transform:translateY(-50%)}
+  .mainnav.is-open ul{
+    position:relative;
+    flex-direction:column;height:auto;
+    width:min(320px,100%);
+    max-height:calc(100dvh - 48px);overflow:auto;
+    padding:52px 0 10px;
+    background:linear-gradient(180deg,#24424f 0%,#182b34 60%,#132229 100%);
+    border:1px solid rgba(255,255,255,.14);
+    border-radius:12px;
+    box-shadow:0 18px 50px rgba(0,0,0,.55),
+               inset 0 1px 0 rgba(255,255,255,.08);
+    animation:navpop .22s ease;
+  }
+  .mainnav.is-open li{flex:none}
+  .mainnav.is-open li + li{border-top:1px solid rgba(255,255,255,.08)}
+  .mainnav.is-open a{
+    height:48px;padding:0 26px;
+    background:none;
+    font-size:14px;letter-spacing:.8px;
+  }
+  .mainnav.is-open a::after{display:none}
+  .mainnav.is-open a::before{
+    content:"";margin-right:10px;
+    width:0;height:0;
+    border-left:5px solid var(--color-accent);
+    border-top:4px solid transparent;
+    border-bottom:4px solid transparent;
+    opacity:.8;
+  }
+  .mainnav.is-open a:hover,
+  .mainnav.is-open a:focus-visible{background:rgba(164,214,60,.12);color:#fff}
+  .mainnav.is-open a.is-active{color:var(--color-accent)}
 }
+
+@keyframes navpop{
+  from{opacity:0;transform:translateY(12px) scale(.96)}
+  to{opacity:1;transform:none}
+}
+
+/* botón de cierre inyectado por JS dentro del popup */
+.navpop-close{
+  position:absolute;top:10px;right:10px;z-index:1;
+  width:32px;height:32px;padding:0;
+  display:none;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:50%;cursor:pointer;
+  color:#cfdce3;font-size:16px;line-height:1;font-family:inherit;
+  transition:color .18s,border-color .18s;
+}
+.navpop-close:hover{color:#fff;border-color:var(--color-accent)}
+.mainnav.is-open .navpop-close{display:flex}
 
 /* =========================================================
    RESPONSIVE — MÓVIL
@@ -654,4 +735,69 @@ img{max-width:100%;display:block}
   .pager{flex-wrap:wrap;justify-content:center}
   .subscribe-form{flex-direction:column;align-items:stretch}
   .btn-cta--sm{justify-content:space-between}
+}
+
+/* =========================================================
+   SELECTOR DE FUENTE TÉCNICA
+   Botón flotante a la derecha + panel con 20 fuentes.
+   Todo el DOM lo inyecta js/main.js en ambas páginas.
+   ========================================================= */
+.font-fab{
+  position:fixed;right:16px;top:50%;z-index:70;
+  transform:translateY(-50%);
+  width:46px;height:46px;padding:0;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid #3f6b10;border-radius:50%;cursor:pointer;
+  background:linear-gradient(180deg,#dff58c 0%,#b6dd4d 45%,#8cc22c 55%,#a5d13d 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.75),
+    inset 0 -1px 0 rgba(0,0,0,.2),
+    0 3px 10px rgba(0,0,0,.45);
+  font-family:inherit;font-size:17px;font-weight:700;color:#2b4f06;
+  text-shadow:0 1px 0 rgba(255,255,255,.5);
+  transition:filter .18s,transform .18s;
+}
+.font-fab:hover{filter:brightness(1.08)}
+.font-fab:active{transform:translateY(-50%) scale(.95)}
+
+.font-panel{
+  position:fixed;right:16px;top:50%;z-index:71;
+  transform:translateY(-50%);
+  display:none;flex-direction:column;
+  width:min(264px,calc(100vw - 32px));
+  max-height:min(560px,calc(100dvh - 32px));
+  background:linear-gradient(180deg,#24424f 0%,#182b34 60%,#132229 100%);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:12px;
+  box-shadow:0 18px 50px rgba(0,0,0,.55),
+             inset 0 1px 0 rgba(255,255,255,.08);
+  animation:navpop .22s ease;
+}
+.font-panel.is-open{display:flex}
+.font-panel-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 12px 10px 16px;
+  border-bottom:1px solid rgba(255,255,255,.10);
+}
+.font-panel-title{
+  margin:0;font-size:12px;font-weight:700;letter-spacing:1px;
+  color:#fff;text-transform:uppercase;
+}
+.font-list{
+  overflow:auto;margin:0;padding:6px 0 8px;list-style:none;
+  overscroll-behavior:contain;
+}
+.font-opt{
+  display:block;width:100%;padding:9px 16px;
+  background:none;border:0;cursor:pointer;text-align:left;
+  font-size:14px;line-height:1.2;color:#dfe9ee;
+  transition:background .15s,color .15s;
+}
+.font-opt:hover,.font-opt:focus-visible{background:rgba(164,214,60,.12);color:#fff}
+.font-opt.is-current{color:var(--color-accent);font-weight:700}
+.font-opt.is-current::after{content:" ✓"}
+
+@media (max-width:560px){
+  .font-fab{right:10px;width:42px;height:42px;font-size:15px}
+  .font-panel{right:10px}
 }
