@@ -241,6 +241,7 @@ img{max-width:100%;display:block}
   position:relative;
   height:262px;   /* y 182..443 del prototipo */
   overflow:hidden;
+  border-radius:0 0 8px 8px;   /* el hero cierra el bloque cabecera+nav+hero */
   background:
     radial-gradient(46% 80% at 66% 44%, rgba(232,255,150,.55) 0%, rgba(180,226,70,0) 100%),
     linear-gradient(200deg, rgba(28,48,8,.35) 0%, rgba(28,48,8,0) 34%),
@@ -291,12 +292,13 @@ img{max-width:100%;display:block}
    ========================================================= */
 .panels{
   display:flex;
-  margin-top:8px;                         /* hueco de fondo bajo el hero */
+  margin-top:12px;                        /* hueco de fondo bajo el hero */
   padding-top:4px;
   background:var(--color-panel);
-  border-top:1px solid var(--color-panel-edge);
-  border-radius:0 0 8px 8px;
+  border:1px solid var(--color-panel-edge);
+  border-radius:8px;                      /* bloque independiente, redondeado */
   box-shadow:inset 0 1px 0 var(--color-panel-hi);
+  overflow:hidden;                        /* recorta cabeceras y divisores */
 }
 .panel{
   position:relative;
@@ -404,12 +406,24 @@ img{max-width:100%;display:block}
    FOOTER
    ========================================================= */
 .site-footer{
+  position:relative;
   margin-top:4px;
   padding:10px 20px;
   background:linear-gradient(180deg,#15232e 0%,#1a2c38 55%,#213745 100%);
   border-radius:10px;
-  box-shadow:0 1px 0 #4a6a7f;
   text-align:center;
+}
+/* halo bajo el footer: tira de 1x31px del prototipo (x650, y829..859),
+   incluye el filo claro del borde inferior — por eso .site-footer ya no
+   lleva box-shadow. Se repite en X, centrada y al 80% del shell.      */
+.site-footer::after{
+  content:"";
+  position:absolute;left:10%;width:80%;bottom:-31px;height:31px;
+  background:url("../assets/footer-glow.png") repeat-x 0 0;
+  /* se funde con el fondo por los dos extremos, como el halo del prototipo */
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 18%,#000 82%,transparent 100%);
+          mask-image:linear-gradient(90deg,transparent 0,#000 18%,#000 82%,transparent 100%);
+  pointer-events:none;
 }
 .site-footer p{margin:0;font-size:11.5px;color:#93a9b3;line-height:1.5}
 .site-footer strong{color:#fff;font-weight:700}
