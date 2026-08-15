@@ -642,3 +642,319 @@
 
   buildTintPicker();
 })();
+
+/* =========================================================
+   Partículas del hero (tsParticles slim, servido desde js/vendor)
+   Cuarto FAB, con la misma mecánica de panel + localStorage:
+   efecto, densidad, velocidad e interacción con el ratón.
+   ========================================================= */
+(function () {
+  'use strict';
+
+  var host = document.getElementById('hero-particles');
+  if (!host || typeof tsParticles === 'undefined') { return; }
+
+  var ACCENT = '#a4d63c';
+  var EFFECTS = [
+    ['none',      'Ninguno'],
+    ['network',   'Red de nodos'],
+    ['motes',     'Motas flotando'],
+    ['dust',      'Polvo en suspensión'],
+    ['fireflies', 'Luciérnagas'],
+    ['nebula',    'Nebulosa'],
+    ['orbit',     'Órbita']
+  ];
+
+  var STORAGE_KEY = 'bizniz-hero-fx';
+  var state = { effect: 'network', density: 55, speed: 40 };
+  var container = null;
+  var token = 0;
+
+  /* el bundle UMD deja tsParticles y loadSlim en window, pero NO ejecuta
+     loadSlim: sin esa llamada no hay movers ni updaters registrados y el
+     canvas se dibuja vacío. Se hace una sola vez y todo cuelga de aquí. */
+  var ready = (typeof loadSlim === 'function')
+    ? loadSlim(tsParticles)
+    : Promise.resolve();
+
+  var reduced = window.matchMedia &&
+                window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function count() { return Math.round(12 + state.density * 0.88); }   // 12..100
+  function speed() { return Math.max(0.05, state.speed / 100 * 3);  }  // 0.05..3
+
+  function baseConfig(extra) {
+    var cfg = {
+      fullScreen: { enable: false },
+      detectRetina: true,
+      fpsLimit: 60,
+      background: { color: 'transparent' },
+      particles: {
+        number: { value: count(), density: { enable: true, area: 900 } },
+        color: { value: ['#ffffff', ACCENT] },
+        opacity: { value: 0.45 },
+        size: { value: { min: 1, max: 3 } },
+        move: { enable: true, speed: speed(), outModes: { default: 'out' } },
+        links: { enable: false }
+      },
+      interactivity: {
+        events: { onHover: { enable: false }, onClick: { enable: false },
+                  resize: { enable: true } }
+      }
+    };
+    Object.keys(extra || {}).forEach(function (k) {
+      cfg.particles[k] = Object.assign({}, cfg.particles[k], extra[k]);
+    });
+    return cfg;
+  }
+
+  function configFor(effect) {
+    if (effect === 'network') {
+      return baseConfig({
+        opacity: { value: 0.6 },
+        size: { value: { min: 1, max: 2.6 } },
+        move: { enable: true, speed: speed(), outModes: { default: 'bounce' } },
+        links: {
+          enable: true, distance: 130, color: '#ffffff',
+          opacity: 0.22, width: 1
+        }
+      });
+    }
+    if (effect === 'motes') {
+      return baseConfig({
+        color: { value: ['#ffffff', '#e8ff96', ACCENT] },
+        opacity: { value: { min: 0.15, max: 0.6 } },
+        size: { value: { min: 1, max: 3.5 } },
+        move: {
+          enable: true, speed: speed(), direction: 'top',
+          straight: false, outModes: { default: 'out' }
+        }
+      });
+    }
+    if (effect === 'fireflies') {
+      // parpadeo lento y errático, en tonos cálidos sobre el verde
+      return baseConfig({
+        color: { value: ['#e8ff96', ACCENT, '#ffffff'] },
+        opacity: {
+          value: { min: 0, max: 0.85 },
+          animation: { enable: true, speed: 0.7, sync: false, startValue: 'random' }
+        },
+        size: { value: { min: 1, max: 2.6 } },
+        move: {
+          enable: true, speed: speed() * 0.35, random: true,
+          straight: false, outModes: { default: 'out' }
+        }
+      });
+    }
+    if (effect === 'nebula') {
+      // halos grandes y casi transparentes: bruma en movimiento
+      return baseConfig({
+        number: { value: Math.max(6, Math.round(count() * 0.25)),
+                  density: { enable: true, area: 900 } },
+        color: { value: ['#ffffff', '#e8ff96'] },
+        opacity: {
+          value: { min: 0.03, max: 0.12 },
+          animation: { enable: true, speed: 0.25, sync: false, startValue: 'random' }
+        },
+        size: { value: { min: 22, max: 70 } },
+        move: {
+          enable: true, speed: speed() * 0.18, random: true,
+          straight: false, outModes: { default: 'out' }
+        }
+      });
+    }
+    if (effect === 'orbit') {
+      // giro lento alrededor del punto de luz del hero
+      var cfg = baseConfig({
+        color: { value: ['#ffffff', ACCENT] },
+        opacity: { value: { min: 0.2, max: 0.7 } },
+        size: { value: { min: 0.8, max: 2.4 } },
+        move: {
+          enable: true, speed: speed() * 0.5,
+          outModes: { default: 'out' },
+          spin: { enable: true, acceleration: 0.05 },
+          center: { x: 66, y: 45, mode: 'percent' }
+        }
+      });
+      return cfg;
+    }
+    // dust
+    return baseConfig({
+      color: { value: '#ffffff' },
+      opacity: { value: { min: 0.05, max: 0.35 } },
+      size: { value: { min: 0.6, max: 1.8 } },
+      move: {
+        enable: true, speed: speed() * 0.4, random: true,
+        outModes: { default: 'out' }
+      }
+    });
+  }
+
+  function save() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+  }
+
+  function render() {
+    if (container) { container.destroy(); container = null; }
+    save();
+    syncUI();
+    if (state.effect === 'none' || reduced) { return; }
+    var mine = ++token;   // descarta cargas que ya han quedado obsoletas
+    var options = configFor(state.effect);
+    ready.then(function () {
+      if (mine !== token) { return; }
+      return tsParticles.load({ id: 'hero-particles', options: options });
+    }).then(function (c) {
+      if (!c) { return; }
+      if (mine !== token) { c.destroy(); return; }
+      container = c;
+    })['catch'](function (e) {
+      if (window.console) { console.warn('tsParticles:', e); }
+    });
+  }
+
+  function syncUI() {
+    Array.prototype.forEach.call(document.querySelectorAll('.fx-effect'), function (b) {
+      b.classList.toggle('is-current', b.getAttribute('data-effect') === state.effect);
+    });
+  }
+
+  function buildFxPicker() {
+    var fab = document.createElement('button');
+    fab.type = 'button';
+    fab.className = 'font-fab fx-fab';
+    fab.setAttribute('aria-label', 'Partículas del hero');
+    fab.setAttribute('aria-expanded', 'false');
+    fab.textContent = '✦';
+
+    var panel = document.createElement('aside');
+    panel.className = 'font-panel fx-panel';
+    panel.setAttribute('aria-label', 'Partículas del hero');
+
+    var head = document.createElement('div');
+    head.className = 'font-panel-head';
+    var title = document.createElement('h2');
+    title.className = 'font-panel-title';
+    title.textContent = 'Partículas';
+    var close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'navpop-close';
+    close.style.position = 'static';
+    close.style.display = 'flex';
+    close.setAttribute('aria-label', 'Cerrar panel de partículas');
+    close.innerHTML = '&#10005;';
+    head.appendChild(title);
+    head.appendChild(close);
+
+    var body = document.createElement('div');
+    body.className = 'tint-body';
+
+    var fxLabel = document.createElement('span');
+    fxLabel.className = 'tint-label';
+    fxLabel.textContent = 'Efecto';
+    var fxList = document.createElement('div');
+    fxList.className = 'tint-patterns';
+    EFFECTS.forEach(function (e) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'tint-pattern fx-effect';
+      b.setAttribute('data-effect', e[0]);
+      b.textContent = e[1];
+      b.addEventListener('click', function () { state.effect = e[0]; render(); });
+      fxList.appendChild(b);
+    });
+
+    var densLabel = document.createElement('span');
+    densLabel.className = 'tint-label';
+    densLabel.textContent = 'Densidad';
+    var dens = document.createElement('input');
+    dens.type = 'range';
+    dens.className = 'tint-range';
+    dens.min = '0'; dens.max = '100'; dens.value = String(state.density);
+    dens.setAttribute('aria-label', 'Densidad de partículas');
+
+    var spdLabel = document.createElement('span');
+    spdLabel.className = 'tint-label';
+    spdLabel.textContent = 'Velocidad';
+    var spd = document.createElement('input');
+    spd.type = 'range';
+    spd.className = 'tint-range';
+    spd.min = '0'; spd.max = '100'; spd.value = String(state.speed);
+    spd.setAttribute('aria-label', 'Velocidad de las partículas');
+
+    /* recargar en cada píxel del deslizador va muy caro: se espera a que
+       el usuario suelte, y mientras tanto sólo se guarda el valor */
+    dens.addEventListener('input', function () { state.density = Number(dens.value); });
+    dens.addEventListener('change', render);
+    spd.addEventListener('input', function () { state.speed = Number(spd.value); });
+    spd.addEventListener('change', render);
+
+    body.appendChild(fxLabel);
+    body.appendChild(fxList);
+    body.appendChild(densLabel);
+    body.appendChild(dens);
+    body.appendChild(spdLabel);
+    body.appendChild(spd);
+
+    if (reduced) {
+      var note = document.createElement('p');
+      note.className = 'fx-note';
+      note.textContent = 'Tu sistema pide movimiento reducido, así que las ' +
+                         'partículas están desactivadas.';
+      body.appendChild(note);
+    }
+
+    panel.appendChild(head);
+    panel.appendChild(body);
+    document.body.appendChild(fab);
+    document.body.appendChild(panel);
+
+    var setPanel = function (open) {
+      panel.classList.toggle('is-open', open);
+      fab.setAttribute('aria-expanded', String(open));
+      if (open) {
+        Array.prototype.forEach.call(
+          document.querySelectorAll('.font-panel:not(.fx-panel)'),
+          function (o) { o.classList.remove('is-open'); }
+        );
+      }
+    };
+
+    fab.addEventListener('click', function () {
+      setPanel(!panel.classList.contains('is-open'));
+    });
+    close.addEventListener('click', function () { setPanel(false); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { setPanel(false); }
+    });
+    document.addEventListener('click', function (e) {
+      if (panel.classList.contains('is-open') &&
+          !panel.contains(e.target) && e.target !== fab) {
+        setPanel(false);
+      }
+    });
+
+    var saved = null;
+    try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY)); } catch (e) {}
+    if (saved) {
+      if (EFFECTS.filter(function (f) { return f[0] === saved.effect; })[0]) {
+        state.effect = saved.effect;
+      }
+      if (typeof saved.density === 'number') { state.density = saved.density; }
+      if (typeof saved.speed === 'number') { state.speed = saved.speed; }
+      dens.value = String(state.density);
+      spd.value = String(state.speed);
+    }
+    render();
+
+    /* no gastar batería animando un hero que no se ve */
+    if (window.IntersectionObserver) {
+      new IntersectionObserver(function (entries) {
+        if (!container) { return; }
+        if (entries[0].isIntersecting) { container.play(); } else { container.pause(); }
+      }, { threshold: 0 }).observe(host);
+    }
+  }
+
+  buildFxPicker();
+})();

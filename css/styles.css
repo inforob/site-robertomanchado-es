@@ -311,6 +311,10 @@ img{max-width:100%;display:block}
     radial-gradient(80% 130% at 60% 40%, #2c5266 0%, #1b3542 50%, #0e1b22 100%);
 }
 
+/* capa de partículas: por encima del fondo, por debajo del texto y el CTA */
+.hero-particles{position:absolute;inset:0;z-index:1;pointer-events:none}
+.hero-particles canvas{display:block}
+
 .hero-copy{
   position:absolute;left:78px;top:60px;z-index:2;max-width:330px;
 }
@@ -899,6 +903,18 @@ img{max-width:100%;display:block}
 }
 .tint-fab:active{transform:translateY(calc(-50% - 112px)) scale(.95)}
 
+/* cuarto FAB: partículas del hero. Reutiliza el panel y los controles
+   del generador de color (.tint-body, .tint-label, .tint-pattern...).   */
+.fx-fab{
+  background:linear-gradient(180deg,#3b3b57 0%,#232338 50%,#1a1a2b 100%);
+  border-color:#0f0f1a;
+  color:#dfe9ee;
+  text-shadow:0 1px 2px rgba(0,0,0,.6);
+  transform:translateY(calc(-50% - 168px));
+}
+.fx-fab:active{transform:translateY(calc(-50% - 168px)) scale(.95)}
+.fx-note{margin:14px 0 0;font-size:11px;line-height:1.5;color:#7d939e}
+
 .tint-body{overflow:auto;padding:14px 16px 16px;overscroll-behavior:contain}
 .tint-label{
   display:block;margin:0 0 8px;
@@ -949,4 +965,6 @@ img{max-width:100%;display:block}
   .hero-fab:active{transform:translateY(calc(-50% - 52px)) scale(.95)}
   .tint-fab{width:42px;height:42px;transform:translateY(calc(-50% - 104px))}
   .tint-fab:active{transform:translateY(calc(-50% - 104px)) scale(.95)}
+  .fx-fab{width:42px;height:42px;transform:translateY(calc(-50% - 156px))}
+  .fx-fab:active{transform:translateY(calc(-50% - 156px)) scale(.95)}
 }
