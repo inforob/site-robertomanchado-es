@@ -280,19 +280,29 @@ img{max-width:100%;display:block}
     radial-gradient(rgba(255,255,255,.16) 1.2px, transparent 1.3px) 0 0/14px 14px,
     radial-gradient(70% 120% at 68% 40%, #b3dc4d 0%, #6ba61e 45%, #2c4d0c 100%);
 }
-[data-bg="carbon"]{
+[data-bg="hex"]{
   background:
-    linear-gradient(90deg, rgba(0,0,0,.5) 0%, rgba(0,0,0,0) 60%),
-    repeating-linear-gradient(45deg,  rgba(255,255,255,.05) 0 1px, transparent 1px 6px),
-    repeating-linear-gradient(-45deg, rgba(0,0,0,.28) 0 1px, transparent 1px 6px),
-    radial-gradient(90% 140% at 70% 30%, #3f6a12 0%, #223d09 55%, #101d06 100%);
+    linear-gradient(90deg, rgba(10,20,3,.55) 0%, rgba(10,20,3,0) 55%),
+    repeating-linear-gradient(60deg,  rgba(255,255,255,.07) 0 1px, transparent 1px 22px),
+    repeating-linear-gradient(-60deg, rgba(255,255,255,.07) 0 1px, transparent 1px 22px),
+    repeating-linear-gradient(0deg,   rgba(255,255,255,.05) 0 1px, transparent 1px 38px),
+    radial-gradient(80% 130% at 62% 46%, #a7d243 0%, #7cb527 40%, #3f6a12 100%);
 }
-[data-bg="rays"]{
+[data-bg="circuit"]{
   background:
-    linear-gradient(90deg, rgba(10,22,4,.55) 0%, rgba(10,22,4,0) 52%),
-    repeating-conic-gradient(from 0deg at 72% 45%,
-      rgba(255,255,255,.10) 0 4deg, rgba(255,255,255,0) 4deg 12deg),
-    radial-gradient(75% 130% at 72% 45%, #c3e86a 0%, #86c02b 32%, #4c7f13 68%, #24400c 100%);
+    linear-gradient(90deg, rgba(8,18,3,.55) 0%, rgba(8,18,3,0) 55%),
+    radial-gradient(rgba(232,255,150,.5) 1.6px, transparent 1.8px) 0 0/32px 32px,
+    repeating-linear-gradient(0deg,  rgba(255,255,255,.06) 0 1px, transparent 1px 32px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.06) 0 1px, transparent 1px 32px),
+    radial-gradient(85% 140% at 66% 42%, #6ba61e 0%, #3d6a10 55%, #1b3208 100%);
+}
+[data-bg="iso"]{
+  background:
+    linear-gradient(90deg, rgba(10,20,3,.5) 0%, rgba(10,20,3,0) 58%),
+    repeating-linear-gradient(30deg,  rgba(255,255,255,.06) 0 1px, transparent 1px 24px),
+    repeating-linear-gradient(150deg, rgba(255,255,255,.06) 0 1px, transparent 1px 24px),
+    repeating-linear-gradient(90deg,  rgba(255,255,255,.06) 0 1px, transparent 1px 24px),
+    radial-gradient(78% 130% at 60% 44%, #9ccf3a 0%, #6ea520 42%, #2f5410 100%);
 }
 [data-bg="blueprint"]{
   background:
@@ -877,9 +887,66 @@ img{max-width:100%;display:block}
   box-shadow:inset 0 1px 0 rgba(255,255,255,.18);
 }
 
+/* tercer FAB: generador de color del hero (color base + intensidad + trama).
+   No sustituye al selector de fondos: pinta un background inline sobre .hero
+   y el botón «Restablecer» lo quita para devolver el mando a [data-bg].    */
+.tint-fab{
+  background:linear-gradient(135deg,#a7d243 0%,#43b0a0 50%,#8f5bd6 100%);
+  border-color:#2a2340;
+  color:#fff;
+  text-shadow:0 1px 2px rgba(0,0,0,.55);
+  transform:translateY(calc(-50% - 112px));
+}
+.tint-fab:active{transform:translateY(calc(-50% - 112px)) scale(.95)}
+
+.tint-body{overflow:auto;padding:14px 16px 16px;overscroll-behavior:contain}
+.tint-label{
+  display:block;margin:0 0 8px;
+  font-size:11px;font-weight:700;letter-spacing:1px;
+  color:#93a9b3;text-transform:uppercase;
+}
+.tint-label + .tint-label{margin-top:18px}
+.tint-colors{display:grid;grid-template-columns:repeat(6,1fr);gap:7px}
+.tint-color{
+  height:28px;padding:0;
+  border:1px solid rgba(0,0,0,.45);border-radius:5px;cursor:pointer;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.22);
+  transition:transform .15s,box-shadow .15s;
+}
+.tint-color:hover{transform:translateY(-1px)}
+.tint-color.is-current{
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.22),
+             0 0 0 2px var(--color-accent);
+}
+.tint-range{width:100%;accent-color:var(--color-accent);cursor:pointer}
+.tint-patterns{display:flex;flex-wrap:wrap;gap:6px}
+.tint-pattern{
+  padding:6px 10px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);border-radius:4px;cursor:pointer;
+  font-family:inherit;font-size:12px;color:#dfe9ee;
+  transition:background .15s,color .15s,border-color .15s;
+}
+.tint-pattern:hover{background:rgba(164,214,60,.16);color:#fff}
+.tint-pattern.is-current{
+  background:rgba(164,214,60,.22);border-color:var(--color-accent);
+  color:#fff;font-weight:700;
+}
+.tint-reset{
+  width:100%;margin-top:18px;padding:9px 12px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.14);border-radius:5px;cursor:pointer;
+  font-family:inherit;font-size:12px;font-weight:700;letter-spacing:.6px;
+  color:#dfe9ee;text-transform:uppercase;
+  transition:background .15s,color .15s;
+}
+.tint-reset:hover{background:rgba(255,255,255,.12);color:#fff}
+
 @media (max-width:560px){
   .font-fab{right:10px;width:42px;height:42px;font-size:15px}
   .font-panel{right:10px}
   .hero-fab{width:42px;height:42px;transform:translateY(calc(-50% - 52px))}
   .hero-fab:active{transform:translateY(calc(-50% - 52px)) scale(.95)}
+  .tint-fab{width:42px;height:42px;transform:translateY(calc(-50% - 104px))}
+  .tint-fab:active{transform:translateY(calc(-50% - 104px)) scale(.95)}
 }

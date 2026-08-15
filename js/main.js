@@ -282,8 +282,9 @@
     ['grid',      'Rejilla técnica'],
     ['diagonals', 'Diagonales'],
     ['dots',      'Trama de puntos'],
-    ['carbon',    'Fibra de carbono'],
-    ['rays',      'Rayos'],
+    ['hex',       'Panal hexagonal'],
+    ['circuit',   'Circuito'],
+    ['iso',       'Malla isométrica'],
     ['blueprint', 'Blueprint azul']
   ];
   var STORAGE_KEY = 'bizniz-hero-bg';
@@ -381,4 +382,263 @@
   }
 
   buildHeroPicker();
+})();
+
+/* =========================================================
+   Generador de color del hero
+   Color base (5 propuestas) + intensidad + trama superpuesta.
+   El gradiente se compone con el color base y su contrario (hue+180).
+   Pinta un background inline sobre .hero, así que convive con el
+   selector de fondos: «Restablecer» lo borra y [data-bg] vuelve a mandar.
+   ========================================================= */
+(function () {
+  'use strict';
+
+  var hero = document.querySelector('.hero');
+  if (!hero) { return; }
+
+  // [id, etiqueta, hue, saturación de referencia] — color plano, sin gradiente
+  var COLORS = [
+    ['lima',      'Lima',        78, 62],
+    ['oliva',     'Oliva',       68, 45],
+    ['esmeralda', 'Esmeralda',  152, 55],
+    ['turquesa',  'Turquesa',   172, 58],
+    ['acero',     'Azul acero', 200, 42],
+    ['indigo',    'Índigo',     228, 48],
+    ['violeta',   'Violeta',    275, 45],
+    ['magenta',   'Magenta',    318, 50],
+    ['carmesi',   'Carmesí',    348, 62],
+    ['coral',     'Coral',       14, 62],
+    ['ambar',     'Ámbar',       38, 70],
+    ['grafito',   'Grafito',    210, 12]
+  ];
+
+  var PATTERNS = [
+    ['none',      'Sin patrón', ''],
+    ['grid',      'Rejilla',
+      'repeating-linear-gradient(0deg,  rgba(255,255,255,.07) 0 1px, transparent 1px 26px),' +
+      'repeating-linear-gradient(90deg, rgba(255,255,255,.07) 0 1px, transparent 1px 26px)'],
+    ['diagonals', 'Diagonales',
+      'repeating-linear-gradient(135deg, rgba(255,255,255,.07) 0 2px, transparent 2px 12px)'],
+    ['dots',      'Puntos',
+      'radial-gradient(rgba(255,255,255,.16) 1.2px, transparent 1.3px) 0 0/14px 14px'],
+    ['hex',       'Panal',
+      'repeating-linear-gradient(60deg,  rgba(255,255,255,.07) 0 1px, transparent 1px 22px),' +
+      'repeating-linear-gradient(-60deg, rgba(255,255,255,.07) 0 1px, transparent 1px 22px),' +
+      'repeating-linear-gradient(0deg,   rgba(255,255,255,.05) 0 1px, transparent 1px 38px)'],
+    ['circuit',   'Circuito',
+      'radial-gradient(rgba(255,255,255,.28) 1.6px, transparent 1.8px) 0 0/32px 32px,' +
+      'repeating-linear-gradient(0deg,  rgba(255,255,255,.06) 0 1px, transparent 1px 32px),' +
+      'repeating-linear-gradient(90deg, rgba(255,255,255,.06) 0 1px, transparent 1px 32px)'],
+    ['iso',       'Isométrica',
+      'repeating-linear-gradient(30deg,  rgba(255,255,255,.06) 0 1px, transparent 1px 24px),' +
+      'repeating-linear-gradient(150deg, rgba(255,255,255,.06) 0 1px, transparent 1px 24px),' +
+      'repeating-linear-gradient(90deg,  rgba(255,255,255,.06) 0 1px, transparent 1px 24px)']
+  ];
+
+  var STORAGE_KEY = 'bizniz-hero-tint';
+  var state = { color: 'lima', intensity: 60, pattern: 'grid', on: false };
+
+  function hsl(h, s, l) {
+    return 'hsl(' + ((h % 360) + 360) % 360 + ',' + s + '%,' + l + '%)';
+  }
+
+  /* la intensidad (0-100) mueve saturación y luminosidad a la vez, tomando
+     como referencia la saturación propia de cada color: apagado y grisáceo
+     a la izquierda, vivo y profundo a la derecha. Devuelve un color plano. */
+  function solid(hue, satRef, i) {
+    var sat = Math.round(satRef * (0.30 + i / 100 * 1.05));   // 30% .. 135% del ref
+    var light = Math.round(52 - i * 0.20);                    // 52% .. 32%
+    return hsl(hue, Math.max(4, Math.min(100, sat)), light);
+  }
+
+  function backgroundFor(colorId, intensity, patternId) {
+    var color = COLORS.filter(function (c) { return c[0] === colorId; })[0] || COLORS[0];
+    var pattern = PATTERNS.filter(function (p) { return p[0] === patternId; })[0];
+    /* el velo oscuro de la izquierda no es decorativo: sin él el titular
+       blanco y el CTA no tienen contraste sobre ámbar, lima o coral */
+    var layers = ['linear-gradient(90deg, rgba(0,0,0,.42) 0%, rgba(0,0,0,0) 58%)'];
+    if (pattern && pattern[2]) { layers.push(pattern[2]); }
+    layers.push(solid(color[2], color[3], intensity));   // color plano de fondo
+    return layers.join(',');
+  }
+
+  function save() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+  }
+
+  function apply() {
+    state.on = true;
+    hero.style.background = backgroundFor(state.color, state.intensity, state.pattern);
+    save();
+    syncUI();
+  }
+
+  function reset() {
+    state.on = false;
+    hero.style.removeProperty('background');   // manda otra vez [data-bg]
+    save();
+    syncUI();
+  }
+
+  function syncUI() {
+    Array.prototype.forEach.call(document.querySelectorAll('.tint-color'), function (b) {
+      b.classList.toggle('is-current', state.on && b.getAttribute('data-color') === state.color);
+      // las muestras siguen al deslizador, para comparar todas a la misma intensidad
+      b.style.background = solid(Number(b.getAttribute('data-hue')),
+                                 Number(b.getAttribute('data-sat')), state.intensity);
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('.tint-pattern'), function (b) {
+      b.classList.toggle('is-current', state.on && b.getAttribute('data-pattern') === state.pattern);
+    });
+  }
+
+  function buildTintPicker() {
+    var fab = document.createElement('button');
+    fab.type = 'button';
+    fab.className = 'font-fab tint-fab';
+    fab.setAttribute('aria-label', 'Generador de color del hero');
+    fab.setAttribute('aria-expanded', 'false');
+    fab.textContent = '◐';
+
+    var panel = document.createElement('aside');
+    panel.className = 'font-panel tint-panel';
+    panel.setAttribute('aria-label', 'Generador de color del hero');
+
+    var head = document.createElement('div');
+    head.className = 'font-panel-head';
+    var title = document.createElement('h2');
+    title.className = 'font-panel-title';
+    title.textContent = 'Color del hero';
+    var close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'navpop-close';
+    close.style.position = 'static';
+    close.style.display = 'flex';
+    close.setAttribute('aria-label', 'Cerrar generador');
+    close.innerHTML = '&#10005;';
+    head.appendChild(title);
+    head.appendChild(close);
+
+    var body = document.createElement('div');
+    body.className = 'tint-body';
+
+    // --- color base
+    var colorLabel = document.createElement('span');
+    colorLabel.className = 'tint-label';
+    colorLabel.textContent = 'Color base';
+    var colors = document.createElement('div');
+    colors.className = 'tint-colors';
+    COLORS.forEach(function (c) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'tint-color';
+      b.setAttribute('data-color', c[0]);
+      b.title = c[1];
+      b.setAttribute('aria-label', c[1]);
+      // la muestra enseña el color plano tal y como está el deslizador
+      b.style.background = solid(c[2], c[3], state.intensity);
+      b.setAttribute('data-hue', String(c[2]));
+      b.setAttribute('data-sat', String(c[3]));
+      b.addEventListener('click', function () { state.color = c[0]; apply(); });
+      colors.appendChild(b);
+    });
+
+    // --- intensidad
+    var rangeLabel = document.createElement('span');
+    rangeLabel.className = 'tint-label';
+    rangeLabel.textContent = 'Intensidad';
+    var range = document.createElement('input');
+    range.type = 'range';
+    range.className = 'tint-range';
+    range.min = '0';
+    range.max = '100';
+    range.value = String(state.intensity);
+    range.setAttribute('aria-label', 'Intensidad del color');
+    range.addEventListener('input', function () {
+      state.intensity = Number(range.value);
+      apply();
+    });
+
+    // --- trama
+    var patLabel = document.createElement('span');
+    patLabel.className = 'tint-label';
+    patLabel.textContent = 'Trama';
+    var pats = document.createElement('div');
+    pats.className = 'tint-patterns';
+    PATTERNS.forEach(function (p) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'tint-pattern';
+      b.setAttribute('data-pattern', p[0]);
+      b.textContent = p[1];
+      b.addEventListener('click', function () { state.pattern = p[0]; apply(); });
+      pats.appendChild(b);
+    });
+
+    var resetBtn = document.createElement('button');
+    resetBtn.type = 'button';
+    resetBtn.className = 'tint-reset';
+    resetBtn.textContent = 'Restablecer fondo';
+    resetBtn.addEventListener('click', reset);
+
+    body.appendChild(colorLabel);
+    body.appendChild(colors);
+    body.appendChild(rangeLabel);
+    body.appendChild(range);
+    body.appendChild(patLabel);
+    body.appendChild(pats);
+    body.appendChild(resetBtn);
+
+    panel.appendChild(head);
+    panel.appendChild(body);
+    document.body.appendChild(fab);
+    document.body.appendChild(panel);
+
+    var setPanel = function (open) {
+      panel.classList.toggle('is-open', open);
+      fab.setAttribute('aria-expanded', String(open));
+      if (open) {
+        Array.prototype.forEach.call(
+          document.querySelectorAll('.font-panel:not(.tint-panel)'),
+          function (o) { o.classList.remove('is-open'); }
+        );
+      }
+    };
+
+    fab.addEventListener('click', function () {
+      setPanel(!panel.classList.contains('is-open'));
+    });
+    close.addEventListener('click', function () { setPanel(false); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { setPanel(false); }
+    });
+    document.addEventListener('click', function (e) {
+      if (panel.classList.contains('is-open') &&
+          !panel.contains(e.target) && e.target !== fab) {
+        setPanel(false);
+      }
+    });
+
+    // estado guardado: sólo repinta si estaba activo
+    var saved = null;
+    try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY)); } catch (e) {}
+    if (saved && saved.on) {
+      if (COLORS.filter(function (c) { return c[0] === saved.color; })[0]) {
+        state.color = saved.color;
+      }
+      if (PATTERNS.filter(function (p) { return p[0] === saved.pattern; })[0]) {
+        state.pattern = saved.pattern;
+      }
+      if (typeof saved.intensity === 'number') {
+        state.intensity = Math.max(0, Math.min(100, saved.intensity));
+      }
+      range.value = String(state.intensity);
+      apply();
+    } else {
+      syncUI();
+    }
+  }
+
+  buildTintPicker();
 })();
