@@ -344,11 +344,6 @@ img{max-width:100%;display:block}
 .btn-cta:active{transform:translateY(1px);box-shadow:inset 0 2px 4px rgba(0,0,0,.28)}
 .btn-cta-arrow{width:11px;height:11px;flex:none}
 
-.hero-art{
-  position:absolute;right:78px;bottom:0;z-index:1;
-  width:460px;height:268px;
-}
-.hero-art svg{width:100%;height:100%;display:block}
 
 /* =========================================================
    PANELES
@@ -622,7 +617,9 @@ img{max-width:100%;display:block}
 }
 
 @media (max-width:940px){
-  .site-header{height:auto;padding:16px 18px 14px}
+  /* padding lateral simétrico: deja libre la esquina del icono sin
+     descentrar la navegación secundaria ni el logo */
+  .site-header{height:auto;padding:16px 60px 14px}
   .header-waves svg{preserveAspectRatio:none}
   .top-nav{position:static;margin-bottom:14px}
   .top-nav ul{justify-content:center}
@@ -641,15 +638,12 @@ img{max-width:100%;display:block}
   .callbox-headset{display:none}
   .callbox-phone{font-size:23px}
 
-  .hero{height:auto;padding:34px 0 0}
+  /* sin la ilustración, el botón era el último elemento y quedaba pegado
+     al borde: el padding inferior es el que le da aire */
+  .hero{height:auto;min-height:220px;padding:34px 0}
   .hero-copy{position:static;max-width:none;padding:0 26px;text-align:center}
   .hero-copy h1{font-size:26px}
   .hero-copy h1 br{display:none}
-  .hero-art{
-    position:relative;right:auto;bottom:auto;
-    width:100%;max-width:460px;height:auto;margin:8px auto 0;
-  }
-  .hero-art svg{width:100%;height:auto}
 
   /* dos columnas + producto a lo ancho */
   .panels{flex-wrap:wrap}
@@ -674,8 +668,24 @@ img{max-width:100%;display:block}
    hamburguesa que abre un popup centrado sobre un velo.
    ========================================================= */
 @media (max-width:940px){
-  .mainnav-wrap{height:50px}
-  .nav-toggle{display:flex}
+  /* fuera la barra de pestañas: el icono sube a la esquina del header.
+     El contenedor no se oculta (dentro vive el popup), sólo se queda sin
+     alto ni textura, y pasa a static para que el botón se ancle a .shell. */
+  .mainnav-wrap{position:static;height:0;background:none}
+  .nav-toggle{
+    position:absolute;top:12px;right:12px;z-index:5;
+    display:flex;justify-content:center;
+    width:40px;height:40px;padding:0;
+    background:rgba(9,18,26,.42);
+    border:1px solid rgba(255,255,255,.16);
+    border-radius:8px;
+    transition:background .18s,border-color .18s;
+  }
+  .nav-toggle:hover,.nav-toggle:focus-visible{
+    background:rgba(9,18,26,.62);border-color:var(--color-accent);
+  }
+  .nav-toggle > span:not(.nav-toggle-bars){display:none}   /* sólo el icono */
+  .nav-toggle-bars i{width:16px}
 
   .mainnav{display:none}
   .mainnav.is-open{
@@ -754,7 +764,8 @@ img{max-width:100%;display:block}
 @media (max-width:560px){
   .page{padding:0 0 40px}
   .shell{max-width:100%}
-  .site-header{border-radius:0}
+  .site-header{border-radius:0;padding:16px 52px 14px}
+  .nav-toggle{top:9px;right:9px;width:38px;height:38px}
   .top-nav ul{gap:12px;flex-wrap:wrap}
   .brand-text{font-size:23px}
   .brand-mark{width:28px;height:28px}
@@ -762,10 +773,10 @@ img{max-width:100%;display:block}
   .callbox-label{font-size:13px}
   .callbox-phone{font-size:21px}
 
-  .hero{padding-top:26px}
+  .hero{min-height:200px;padding:26px 0 30px}
   .hero-copy{padding:0 18px}
   .hero-copy h1{font-size:22px;line-height:1.3}
-  .btn-cta{gap:24px}
+  .btn-cta{gap:14px;height:38px}
 
   .panel-head{padding:0 18px;height:44px}
   .panel-head h2{font-size:17px}
