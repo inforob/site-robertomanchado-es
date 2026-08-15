@@ -249,8 +249,57 @@ img{max-width:100%;display:block}
     radial-gradient(75% 130% at 58% 50%, #a7d243 0%, #8ec42e 34%, #5d941a 66%, #35590f 88%, #24400c 100%);
   box-shadow:inset 0 2px 6px rgba(0,0,0,.35);
 }
-.hero-waves{position:absolute;inset:0}
-.hero-waves svg{width:100%;height:100%;display:block}
+/* ---------- fondos seleccionables del hero ----------
+   El selector flotante pone data-bg en .hero. Los mismos estilos sirven
+   para las muestras del panel, por eso el selector va por atributo y no
+   cuelga de .hero. Todos llevan un velo oscuro a la izquierda para que
+   el titular y el CTA mantengan contraste.                            */
+[data-bg="original"]{
+  background:
+    radial-gradient(46% 80% at 66% 44%, rgba(232,255,150,.55) 0%, rgba(180,226,70,0) 100%),
+    linear-gradient(200deg, rgba(28,48,8,.35) 0%, rgba(28,48,8,0) 34%),
+    linear-gradient(20deg, rgba(24,42,6,.45) 0%, rgba(24,42,6,0) 40%),
+    radial-gradient(75% 130% at 58% 50%, #a7d243 0%, #8ec42e 34%, #5d941a 66%, #35590f 88%, #24400c 100%);
+}
+[data-bg="grid"]{
+  background:
+    linear-gradient(90deg, rgba(12,24,4,.55) 0%, rgba(12,24,4,0) 55%),
+    repeating-linear-gradient(0deg,  rgba(255,255,255,.07) 0 1px, transparent 1px 26px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.07) 0 1px, transparent 1px 26px),
+    radial-gradient(80% 130% at 62% 46%, #a7d243 0%, #79b224 38%, #47760f 72%, #23400b 100%);
+}
+[data-bg="diagonals"]{
+  background:
+    linear-gradient(90deg, rgba(10,20,3,.5) 0%, rgba(10,20,3,0) 58%),
+    repeating-linear-gradient(135deg, rgba(255,255,255,.06) 0 2px, transparent 2px 12px),
+    linear-gradient(160deg, #b9e356 0%, #7fbb28 40%, #3f6a12 100%);
+}
+[data-bg="dots"]{
+  background:
+    linear-gradient(90deg, rgba(8,18,3,.55) 0%, rgba(8,18,3,0) 55%),
+    radial-gradient(rgba(255,255,255,.16) 1.2px, transparent 1.3px) 0 0/14px 14px,
+    radial-gradient(70% 120% at 68% 40%, #b3dc4d 0%, #6ba61e 45%, #2c4d0c 100%);
+}
+[data-bg="carbon"]{
+  background:
+    linear-gradient(90deg, rgba(0,0,0,.5) 0%, rgba(0,0,0,0) 60%),
+    repeating-linear-gradient(45deg,  rgba(255,255,255,.05) 0 1px, transparent 1px 6px),
+    repeating-linear-gradient(-45deg, rgba(0,0,0,.28) 0 1px, transparent 1px 6px),
+    radial-gradient(90% 140% at 70% 30%, #3f6a12 0%, #223d09 55%, #101d06 100%);
+}
+[data-bg="rays"]{
+  background:
+    linear-gradient(90deg, rgba(10,22,4,.55) 0%, rgba(10,22,4,0) 52%),
+    repeating-conic-gradient(from 0deg at 72% 45%,
+      rgba(255,255,255,.10) 0 4deg, rgba(255,255,255,0) 4deg 12deg),
+    radial-gradient(75% 130% at 72% 45%, #c3e86a 0%, #86c02b 32%, #4c7f13 68%, #24400c 100%);
+}
+[data-bg="blueprint"]{
+  background:
+    linear-gradient(90deg, rgba(4,12,18,.6) 0%, rgba(4,12,18,0) 60%),
+    repeating-linear-gradient(0deg, rgba(164,214,60,.10) 0 1px, transparent 1px 4px),
+    radial-gradient(80% 130% at 60% 40%, #2c5266 0%, #1b3542 50%, #0e1b22 100%);
+}
 
 .hero-copy{
   position:absolute;left:78px;top:60px;z-index:2;max-width:330px;
@@ -811,7 +860,26 @@ img{max-width:100%;display:block}
 .font-opt.is-current{color:var(--color-accent);font-weight:700}
 .font-opt.is-current::after{content:" ✓"}
 
+/* segundo FAB: fondo del hero. Comparte los estilos del panel de fuentes,
+   sólo cambia el color y la posición (justo encima del de tipografía).   */
+.hero-fab{
+  background:linear-gradient(180deg,#5b8ba6 0%,#33586d 45%,#254456 55%,#2f5468 100%);
+  border-color:#13242e;
+  color:#eaf2f6;
+  text-shadow:0 1px 2px rgba(0,0,0,.5);
+  transform:translateY(calc(-50% - 56px));
+}
+.hero-fab:active{transform:translateY(calc(-50% - 56px)) scale(.95)}
+.hero-opt{display:flex;align-items:center;gap:10px}
+.hero-swatch{
+  flex:none;width:38px;height:24px;border-radius:4px;
+  border:1px solid rgba(0,0,0,.45);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18);
+}
+
 @media (max-width:560px){
   .font-fab{right:10px;width:42px;height:42px;font-size:15px}
   .font-panel{right:10px}
+  .hero-fab{width:42px;height:42px;transform:translateY(calc(-50% - 52px))}
+  .hero-fab:active{transform:translateY(calc(-50% - 52px)) scale(.95)}
 }

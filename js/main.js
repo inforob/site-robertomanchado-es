@@ -266,3 +266,119 @@
 
   buildFontPicker();
 })();
+
+/* =========================================================
+   Selector de fondo del hero (patrón + gradiente)
+   Sólo actúa si hay un .hero en la página (index.html).
+   ========================================================= */
+(function () {
+  'use strict';
+
+  var hero = document.querySelector('.hero');
+  if (!hero) { return; }
+
+  var BACKGROUNDS = [
+    ['original',  'Original (verde radial)'],
+    ['grid',      'Rejilla técnica'],
+    ['diagonals', 'Diagonales'],
+    ['dots',      'Trama de puntos'],
+    ['carbon',    'Fibra de carbono'],
+    ['rays',      'Rayos'],
+    ['blueprint', 'Blueprint azul']
+  ];
+  var STORAGE_KEY = 'bizniz-hero-bg';
+
+  function applyBg(id) {
+    hero.setAttribute('data-bg', id);
+    try { localStorage.setItem(STORAGE_KEY, id); } catch (e) {}
+    var opts = document.querySelectorAll('.hero-opt');
+    Array.prototype.forEach.call(opts, function (o) {
+      o.classList.toggle('is-current', o.getAttribute('data-bg-opt') === id);
+    });
+  }
+
+  function buildHeroPicker() {
+    var fab = document.createElement('button');
+    fab.type = 'button';
+    fab.className = 'font-fab hero-fab';
+    fab.setAttribute('aria-label', 'Elegir fondo del hero');
+    fab.setAttribute('aria-expanded', 'false');
+    fab.textContent = '◧';
+
+    var panel = document.createElement('aside');
+    panel.className = 'font-panel hero-panel';
+    panel.setAttribute('aria-label', 'Selector de fondo del hero');
+
+    var head = document.createElement('div');
+    head.className = 'font-panel-head';
+    var title = document.createElement('h2');
+    title.className = 'font-panel-title';
+    title.textContent = 'Fondo del hero';
+    var close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'navpop-close';
+    close.style.position = 'static';
+    close.style.display = 'flex';
+    close.setAttribute('aria-label', 'Cerrar selector');
+    close.innerHTML = '&#10005;';
+    head.appendChild(title);
+    head.appendChild(close);
+
+    var list = document.createElement('ul');
+    list.className = 'font-list';
+
+    BACKGROUNDS.forEach(function (opt) {
+      var li = document.createElement('li');
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'font-opt hero-opt';
+      btn.setAttribute('data-bg-opt', opt[0]);
+      var swatch = document.createElement('span');
+      swatch.className = 'hero-swatch';
+      swatch.setAttribute('data-bg', opt[0]);   // reusa el mismo CSS del hero
+      var label = document.createElement('span');
+      label.textContent = opt[1];
+      btn.appendChild(swatch);
+      btn.appendChild(label);
+      btn.addEventListener('click', function () { applyBg(opt[0]); });
+      li.appendChild(btn);
+      list.appendChild(li);
+    });
+
+    panel.appendChild(head);
+    panel.appendChild(list);
+    document.body.appendChild(fab);
+    document.body.appendChild(panel);
+
+    var setPanel = function (open) {
+      panel.classList.toggle('is-open', open);
+      fab.setAttribute('aria-expanded', String(open));
+      // sólo un panel abierto a la vez: los dos ocupan el mismo sitio
+      if (open) {
+        var other = document.querySelector('.font-panel:not(.hero-panel)');
+        if (other) { other.classList.remove('is-open'); }
+      }
+    };
+
+    fab.addEventListener('click', function () {
+      setPanel(!panel.classList.contains('is-open'));
+    });
+    close.addEventListener('click', function () { setPanel(false); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { setPanel(false); }
+    });
+    document.addEventListener('click', function (e) {
+      if (panel.classList.contains('is-open') &&
+          !panel.contains(e.target) && e.target !== fab) {
+        setPanel(false);
+      }
+    });
+
+    var saved = null;
+    try { saved = localStorage.getItem(STORAGE_KEY); } catch (e) {}
+    var valid = BACKGROUNDS.filter(function (b) { return b[0] === saved; })[0];
+    applyBg(valid ? saved : 'original');
+  }
+
+  buildHeroPicker();
+})();
