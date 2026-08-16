@@ -382,7 +382,8 @@ img{max-width:100%;display:block}
 .panel:last-child  .panel-head{margin-right:6px}
 /* el tercer panel no lleva curva ni puntos: en el prototipo tampoco, y
    además es la esquina que redondeamos */
-.panel--chat .panel-head::after{display:none}
+.panel--chat .panel-head::after,
+.panel--glance .panel-head::after{display:none}
 
 .panel-head h2{
   position:relative;z-index:1;
@@ -420,6 +421,57 @@ img{max-width:100%;display:block}
   font-size:12.4px;color:#dfe9ee;transition:color .18s;
 }
 .arrow-list a:hover{color:var(--color-accent)}
+
+/* ---------- panel "At a glance" ----------
+   Stack, experiencia y skills en un vistazo. Muy denso a propósito: es
+   la tarjeta de presentación técnica, no el CV completo.             */
+.panel--glance .panel-body{padding:22px 20px 0 22px}
+.glance-sec + .glance-sec{
+  margin-top:15px;padding-top:14px;
+  border-top:1px solid rgba(255,255,255,.09);
+}
+.glance-label{
+  margin:0 0 8px;
+  font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--color-accent);
+}
+
+/* stack como etiquetas */
+.glance-chips{display:flex;flex-wrap:wrap;gap:5px;margin:0;padding:0;list-style:none}
+.glance-chips li{
+  padding:3px 8px;
+  border:1px solid rgba(255,255,255,.14);border-radius:3px;
+  background:rgba(255,255,255,.05);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
+  font-size:11px;font-weight:600;letter-spacing:.2px;color:#dbe7ee;
+}
+
+/* experiencia: una frase y tres hechos */
+.glance-lead{
+  margin:0 0 10px;
+  font-size:12.2px;line-height:1.45;color:var(--color-body);
+}
+.glance-lead strong{color:#fff;font-weight:700}
+.glance-facts{
+  display:grid;grid-template-columns:auto 1fr;gap:5px 10px;
+  margin:0;
+}
+.glance-facts dt{
+  font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
+  color:#8ba3af;padding-top:2px;
+}
+.glance-facts dd{margin:0;font-size:11.8px;line-height:1.4;color:#dbe7ee}
+
+/* skills: reutiliza los chevrons de .arrow-list */
+.glance-skills li{font-size:11.8px;line-height:1.45;color:#dbe7ee;padding-bottom:7px}
+.glance-skills li:last-child{padding-bottom:0}
+
+@media (max-width:940px){
+  .panel--glance .panel-body{padding:20px 24px 0}
+}
+@media (max-width:640px){
+  .panel--glance .panel-body{padding:18px 18px 0}
+}
 
 /* ---------- panel del chatbot del CV ----------
    Ocupa todo el alto del bloque: el panel es flex en columna y el cuerpo
@@ -815,11 +867,13 @@ body.chat-modal-open{overflow:hidden}
   /* dos columnas + chat a lo ancho */
   .panels{flex-wrap:wrap}
   .panel{flex:1 1 50%}
-  .panel--chat{flex:1 1 100%}
+  .panel--chat,
+  .panel--glance{flex:1 1 100%}
   .panel + .panel::before{
     background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,0));
   }
-  .panel--chat::before{
+  .panel--chat::before,
+  .panel--glance::before{
     left:24px;right:24px;top:0;bottom:auto;width:auto;height:1px;
     background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.14),rgba(255,255,255,0));
   }
