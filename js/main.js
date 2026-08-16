@@ -67,57 +67,6 @@
     });
   });
 
-  /* ---------- slider de producto destacado ---------- */
-  var products = [
-    {
-      name: 'Product Name and Model',
-      desc: 'Lorem ipsum dolor sit amet consequat est Consectetuer estelity magna.'
-    },
-    {
-      name: 'Second Product Model',
-      desc: 'Sed diam nonumy nibh euismod tincidunt ut laoreet dolore magna aliquam.'
-    },
-    {
-      name: 'Third Product Model',
-      desc: 'Ut wisi enim ad minim veniam quis nostrud exerci tation ullamcorper.'
-    }
-  ];
-
-  var stage = document.querySelector('.product-stage');
-  var nameEl = document.querySelector('.product-name');
-  var descEl = document.querySelector('.product-desc');
-  var prev = document.getElementById('prevProduct');
-  var next = document.getElementById('nextProduct');
-  var index = 0;
-
-  function render() {
-    if (!stage) return;
-    stage.classList.add('is-fading');
-    window.setTimeout(function () {
-      var p = products[index];
-      nameEl.textContent = p.name;
-      descEl.innerHTML = p.desc + ' <a href="#" class="more">More&gt;</a>';
-      stage.classList.remove('is-fading');
-    }, 180);
-  }
-
-  function step(delta) {
-    index = (index + delta + products.length) % products.length;
-    render();
-  }
-
-  if (prev && next) {
-    prev.addEventListener('click', function () { step(-1); });
-    next.addEventListener('click', function () { step(1); });
-
-    // navegación por teclado dentro del panel
-    var box = document.querySelector('.product-box');
-    box.addEventListener('keydown', function (e) {
-      if (e.key === 'ArrowLeft') { step(-1); }
-      if (e.key === 'ArrowRight') { step(1); }
-    });
-  }
-
   /* =========================================================
      SELECTOR DE FUENTE TÉCNICA
      Botón flotante + panel con 20 fuentes de Google Fonts.

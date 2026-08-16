@@ -131,64 +131,32 @@
         </div>
       </article>
 
-      <!-- Featured Product -->
-      <article class="panel panel--product">
+      <!-- Ask my CV: chatbot de prototipo, respuestas preestablecidas -->
+      <article class="panel panel--chat">
         <header class="panel-head">
-          <h2><span class="thin">Featured</span> <span class="bold">Product</span></h2>
+          <h2><span class="thin">Ask my</span> <span class="bold">CV</span></h2>
         </header>
         <div class="panel-body">
-          <div class="product-box">
-            <button class="slider-arrow slider-arrow--prev" id="prevProduct" aria-label="Producto anterior">
-              <svg viewBox="0 0 12 20" aria-hidden="true"><path d="M9.5 1 L2 10 L9.5 19" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
-            </button>
-            <button class="slider-arrow slider-arrow--next" id="nextProduct" aria-label="Producto siguiente">
-              <svg viewBox="0 0 12 20" aria-hidden="true"><path d="M2.5 1 L10 10 L2.5 19" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
-            </button>
-
-            <div class="product-stage">
-              <div class="product-shot" aria-hidden="true">
-                <svg viewBox="0 0 240 190">
-                  <defs>
-                    <linearGradient id="projTop" x1="0" y1="0" x2="1" y2="1">
-                      <stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="#e7e9ea"/>
-                      <stop offset="1" stop-color="#b9bec1"/>
-                    </linearGradient>
-                    <linearGradient id="projFront" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0" stop-color="#f7f8f8"/><stop offset="1" stop-color="#9aa0a4"/>
-                    </linearGradient>
-                    <linearGradient id="projSide" x1="0" y1="0" x2="1" y2="0">
-                      <stop offset="0" stop-color="#cfd3d5"/><stop offset="1" stop-color="#7d8388"/>
-                    </linearGradient>
-                    <radialGradient id="lensG" cx=".4" cy=".35" r=".7">
-                      <stop offset="0" stop-color="#bfe6ff"/><stop offset=".5" stop-color="#2b7fb5"/>
-                      <stop offset="1" stop-color="#0b1c2a"/>
-                    </radialGradient>
-                    <linearGradient id="reflG" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0" stop-color="#c8cdd0" stop-opacity=".32"/>
-                      <stop offset="1" stop-color="#c8cdd0" stop-opacity="0"/>
-                    </linearGradient>
-                  </defs>
-                  <path d="M28 120 L44 44 L206 40 L222 118 Z" fill="url(#projTop)"/>
-                  <path d="M28 120 L222 118 L216 140 L34 142 Z" fill="url(#projFront)"/>
-                  <path d="M206 40 L222 118 L216 140 L204 62 Z" fill="url(#projSide)"/>
-                  <path d="M44 44 L206 40 L204 50 L46 54 Z" fill="#ffffff" opacity=".7"/>
-                  <g stroke="#b9bec2" stroke-width="1" opacity=".8">
-                    <path d="M96 54 L188 96 M188 54 L96 96"/>
-                    <rect x="96" y="54" width="92" height="42" fill="none"/>
-                  </g>
-                  <text x="142" y="50" text-anchor="middle" font-family="Source Sans 3, Arial" font-size="9" fill="#8b9195" letter-spacing="1">REPLACE</text>
-                  <text x="142" y="106" text-anchor="middle" font-family="Source Sans 3, Arial" font-size="9" fill="#8b9195" letter-spacing="1">PICTURE</text>
-                  <circle cx="62" cy="112" r="26" fill="#e3e6e8"/>
-                  <circle cx="62" cy="112" r="21" fill="#2a2f33"/>
-                  <circle cx="62" cy="112" r="17" fill="url(#lensG)"/>
-                  <circle cx="55" cy="105" r="6" fill="#ffffff" opacity=".45"/>
-                  <rect x="150" y="122" width="52" height="6" rx="3" fill="#7f868b" opacity=".6"/>
-                  <path d="M34 142 L216 140 L206 176 L46 178 Z" fill="url(#reflG)"/>
-                </svg>
-              </div>
-              <h3 class="product-name">Product Name and Model</h3>
-              <p class="product-desc">Lorem ipsum dolor sit amet consequat est Consectetuer estelity magna. <a href="#" class="more">More&gt;</a></p>
+          <div class="chat" id="cvChat">
+            <div class="chat-bar" aria-hidden="true">
+              <i></i><i></i><i></i><span>cv-assistant</span>
             </div>
+
+            <div class="chat-log" id="chatLog" role="log" aria-live="polite"
+                 aria-label="Conversación con el asistente del CV"></div>
+
+            <div class="chat-suggestions" id="chatSuggestions"></div>
+
+            <form class="chat-form" id="chatForm">
+              <input class="chat-input" id="chatInput" type="text" autocomplete="off"
+                     placeholder="Pregunta por el CV…" aria-label="Escribe tu pregunta">
+              <button class="chat-send" type="submit" aria-label="Enviar pregunta">
+                <svg viewBox="0 0 12 12" aria-hidden="true">
+                  <path d="M1 6 H10 M6.5 2 L10.5 6 L6.5 10" fill="none"
+                        stroke="#2b4f06" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+              </button>
+            </form>
           </div>
         </div>
       </article>
@@ -209,5 +177,6 @@
 
 <script src="js/vendor/tsparticles.slim.bundle.min.js"></script>
 <script src="js/main.js"></script>
+<script src="js/cv-chat.js"></script>
 </body>
 </html>
