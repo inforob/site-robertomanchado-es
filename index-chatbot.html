@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BizNiz Corp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- ============ DEFS SVG GLOBALES ============ -->
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+  <defs>
+    <!-- patrón de puntos verde de las pestañas -->
+    <pattern id="tabDots" width="3" height="3" patternUnits="userSpaceOnUse">
+      <rect width="1.6" height="1.6" fill="#a4d63c"/>
+    </pattern>
+  </defs>
+</svg>
+
+<div class="page">
+  <div class="shell">
+
+    <!-- ==================== HEADER ==================== -->
+    <header class="site-header">
+      <div class="header-waves" aria-hidden="true">
+        <svg viewBox="0 0 940 112" preserveAspectRatio="none">
+          <path d="M0,86 C160,40 300,104 460,72 C620,40 780,96 940,58 L940,112 L0,112 Z" fill="#ffffff" opacity=".025"/>
+          <path d="M0,64 C180,110 320,26 500,54 C680,82 800,30 940,46" fill="none" stroke="#ffffff" stroke-opacity=".05" stroke-width="1"/>
+          <path d="M0,52 C200,96 340,16 520,44 C700,72 820,20 940,34" fill="none" stroke="#ffffff" stroke-opacity=".035" stroke-width="1"/>
+        </svg>
+      </div>
+
+      <!-- navegación secundaria superior -->
+      <nav class="top-nav" aria-label="Navegación secundaria">
+        <ul>
+          <li><a href="index.html"><span class="chev" aria-hidden="true"></span>HOME</a></li>
+          <li><a href="#"><span class="chev" aria-hidden="true"></span>SITEMAP</a></li>
+          <li><a href="#"><span class="chev" aria-hidden="true"></span>CONTACT US</a></li>
+        </ul>
+      </nav>
+
+      <!-- logo -->
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40">
+            <defs>
+              <linearGradient id="leafG" x1="0" y1="1" x2="1" y2="0">
+                <stop offset="0" stop-color="#3f7d10"/>
+                <stop offset=".45" stop-color="#7fbe22"/>
+                <stop offset="1" stop-color="#c6e94b"/>
+              </linearGradient>
+            </defs>
+            <path d="M4 33 C6 16 18 5 36 4 C34 20 24 31 8 33 Z" fill="url(#leafG)"/>
+            <path d="M6 33 C14 22 24 13 35 6" fill="none" stroke="#2c5c0b" stroke-width="1.6" opacity=".55"/>
+            <path d="M13 30 C15 22 20 15 27 10" fill="none" stroke="#eaffb0" stroke-width="1" opacity=".45"/>
+          </svg>
+        </span>
+        <span class="brand-text"><span class="brand-light">BizNiz</span> <span class="brand-bold">Corp</span></span>
+      </a>
+
+      <!-- bloque de contacto: la URL de GitHub -->
+      <div class="callbox">
+        <a class="callbox-url" href="https://github.com/inforob-sf/"
+           target="_blank" rel="noopener">https://github.com/inforob-sf/</a>
+      </div>
+    </header>
+
+    <!-- ==================== MENÚ PRINCIPAL ==================== -->
+    <div class="mainnav-wrap">
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav">
+        <span class="nav-toggle-bars" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>MENU</span>
+      </button>
+      <nav class="mainnav" id="mainNav" aria-label="Navegación principal">
+        <ul>
+          <li><a href="#" class="is-active">ABOUT US</a></li>
+          <li><a href="#">SERVICES</a></li>
+          <li><a href="#">PRODUCTS</a></li>
+          <li><a href="#">DEALERS</a></li>
+          <li><a href="#">CAREERS</a></li>
+          <li><a href="news.html">NEWS</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- ==================== HERO ==================== -->
+    <section class="hero">
+      <div class="hero-particles" id="hero-particles" aria-hidden="true"></div>
+
+      <div class="hero-copy">
+        <h1>Lorem ipsum dolor <br>sit amet, consectetuer <br>adispicsing dolore.</h1>
+        <a href="#" class="btn-cta">
+          <span>MORE DETAILS</span>
+          <svg class="btn-cta-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1 L9 6 L3 11 Z" fill="#2f5c05"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- ==================== PANELES ==================== -->
+    <section class="panels panels--rounded-heads">
+      <!-- Our Company -->
+      <article class="panel">
+        <header class="panel-head">
+          <h2><span class="thin">Our</span> <span class="bold">Company</span></h2>
+        </header>
+        <div class="panel-body">
+          <p><strong>BizNiz Corp</strong> is a siamet, consec tetuer elit, sed diam nonumy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci ex ea com consequat.</p>
+          <p>Lorem ipsum consectetuer adipiscing elit, sed diam nonumy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ull amcorper supit lobortis ex ea. <a href="#" class="more">More&gt;</a></p>
+        </div>
+      </article>
+
+      <!-- Our Services -->
+      <article class="panel">
+        <header class="panel-head">
+          <h2><span class="thin">Our</span> <span class="bold">Services</span></h2>
+        </header>
+        <div class="panel-body">
+          <p>Our company is a siamet, consectetuere elit, sed diam nonumy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim amcorper suscipit lobortis nisl ut:</p>
+          <ul class="arrow-list">
+            <li><a href="#">Lorem ipsum consectetuer adipiscing</a></li>
+            <li><a href="#">Sed diam nonumy nibh euismod tincidtut</a></li>
+            <li><a href="#">Laoreet dolore magna aliquam volutpat</a></li>
+            <li><a href="#">Wisi enim ad minim veniam quis nostrud exerci</a></li>
+            <li><a href="#">Stationull amcorper lobortis consequat</a></li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Ask my CV: chatbot de prototipo, respuestas preestablecidas -->
+      <article class="panel panel--chat">
+        <header class="panel-head">
+          <h2><span class="thin">Ask my</span> <span class="bold">CV</span></h2>
+        </header>
+        <div class="panel-body">
+          <div class="chat" id="cvChat">
+            <div class="chat-log" id="chatLog" role="log" aria-live="polite"
+                 aria-label="Conversación con el asistente del CV"></div>
+
+            <div class="chat-suggestions" id="chatSuggestions"></div>
+
+            <form class="chat-form" id="chatForm">
+              <button class="chat-expand" id="chatExpand" type="button"
+                      aria-label="Ampliar el chat" title="Ampliar">
+                <svg viewBox="0 0 12 12" aria-hidden="true">
+                  <path d="M7 1 H11 V5 M11 1 L6.6 5.4 M5 11 H1 V7 M1 11 L5.4 6.6"
+                        fill="none" stroke="currentColor" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <input class="chat-input" id="chatInput" type="text" autocomplete="off"
+                     placeholder="Pregunta por el CV…" aria-label="Escribe tu pregunta">
+              <button class="chat-send" type="submit" aria-label="Enviar pregunta">
+                <svg viewBox="0 0 12 12" aria-hidden="true">
+                  <path d="M1 6 H10 M6.5 2 L10.5 6 L6.5 10" fill="none"
+                        stroke="#2b4f06" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+              </button>
+            </form>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="site-footer">
+      <p>
+        <strong>Company Name</strong> <span class="sep">|</span> WS3B-85 One Avenue Drive P.O. Box 100
+        <span class="sep">|</span> Whitehouse Station, NJ 08889281
+        <span class="sep">|</span> Consumers/Clients 1-888-776-8364
+        <span class="sep">|</span> <a href="mailto:info@biznizcorp.com">info{a}biznizcorp.com</a>
+      </p>
+    </footer>
+
+  </div>
+</div>
+
+<!-- ==================== MODAL DEL CHAT ====================
+     Vacío a propósito: al ampliar, el JS mueve aquí el propio #cvChat,
+     así la conversación continúa sin perder estado ni listeners.   -->
+<div class="chat-modal" id="chatModal" hidden>
+  <div class="chat-modal-backdrop" data-chat-close></div>
+  <div class="chat-modal-box" role="dialog" aria-modal="true" aria-label="Ask my CV">
+    <div class="chat-modal-head">
+      <h3><span class="thin">Ask my</span> <span class="bold">CV</span></h3>
+      <button class="chat-modal-close" type="button" data-chat-close aria-label="Cerrar el chat">
+        <svg viewBox="0 0 12 12" aria-hidden="true">
+          <path d="M2 2 L10 10 M10 2 L2 10" fill="none" stroke="currentColor"
+                stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="chat-modal-body" id="chatModalSlot"></div>
+  </div>
+</div>
+
+<script src="js/vendor/tsparticles.slim.bundle.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/cv-chat.js"></script>
+</body>
+</html>
