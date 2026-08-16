@@ -30,6 +30,10 @@
   --color-accent-2:    #c8e96a;
   --color-green-dark:  #3e6b0d;
 
+  /* chevron ">" de las listas: 6x9 con trazo de 2, calcado del prototipo.
+     Se usa como máscara, por eso el trazo va en negro opaco. */
+  --chevron-right: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 9' shape-rendering='crispEdges'%3E%3Cpath d='M1 1L5 4.5L1 8' fill='none' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E");
+
   /* hero */
   --hero-green-lit:    #a9d443;
   --hero-green:        #7cb527;
@@ -127,11 +131,12 @@ img{max-width:100%;display:block}
   text-transform:uppercase;transition:color .18s;
 }
 .top-nav a:hover{color:#fff}
+/* mismo chevron que las listas, a menor tamaño */
 .top-nav .chev{
-  width:0;height:0;
-  border-left:4px solid var(--color-accent);
-  border-top:3px solid transparent;
-  border-bottom:3px solid transparent;
+  width:4px;height:6px;flex:none;
+  background:var(--color-accent);
+  -webkit-mask:var(--chevron-right) no-repeat center/contain;
+          mask:var(--chevron-right) no-repeat center/contain;
 }
 
 /* logo */
@@ -148,39 +153,18 @@ img{max-width:100%;display:block}
 .brand-light{font-weight:600;letter-spacing:-.4px}
 .brand-bold{font-weight:700}
 
-/* bloque de teléfono */
+/* bloque de contacto: la URL de GitHub, arriba a la derecha del header */
 .callbox{
-  position:absolute;right:20px;bottom:6px;z-index:3;
-  display:flex;align-items:baseline;gap:96px;
-  padding-left:170px;
+  position:absolute;right:24px;bottom:20px;z-index:3;
+  display:flex;align-items:center;
 }
-.callbox-glow{
-  position:absolute;right:110px;bottom:-46px;
-  width:250px;height:160px;
-  background:radial-gradient(50% 50% at 50% 50%,
-    rgba(190,232,74,.92) 0%,
-    rgba(150,204,54,.55) 34%,
-    rgba(102,158,32,.20) 58%,
-    rgba(94,150,30,0) 74%);
-  pointer-events:none;
-}
-.callbox-headset{
-  position:absolute;right:186px;bottom:-6px;width:96px;height:78px;
-}
-.callbox-headset svg{width:100%;height:100%;display:block}
-.callbox-label{
+.callbox-url{
   position:relative;
-  font-size:14px;font-weight:700;letter-spacing:.2px;
-  color:#e9ffb0;
-  text-shadow:0 1px 2px rgba(0,0,0,.65);
-}
-.callbox-phone{
-  position:relative;
-  font-size:26px;font-weight:700;color:#fff;letter-spacing:.2px;
+  font-size:17px;font-weight:700;color:#fff;letter-spacing:.2px;
   text-shadow:0 2px 5px rgba(0,0,0,.7);
   transition:color .18s;
 }
-.callbox-phone:hover{color:#e8ffbc}
+.callbox-url:hover{color:#e8ffbc}
 
 /* =========================================================
    MENÚ PRINCIPAL
@@ -358,6 +342,15 @@ img{max-width:100%;display:block}
   box-shadow:inset 0 1px 0 var(--color-panel-hi);
   overflow:hidden;                        /* recorta cabeceras y divisores */
 }
+/* esquinas de las barras de cabecera (sólo index.html; el contenedor
+   conserva sus 8px). La primera redondea la izquierda arriba y abajo; la de
+   Featured Product, sólo arriba a la derecha —puede porque es la única sin
+   head-cap.png, que ocuparía justo esa esquina. */
+.panels--rounded-heads .panel:first-child .panel-head{border-radius:5px 0 0 5px}
+.panels--rounded-heads .panel--product .panel-head{border-radius:0 5px 0 0}
+/* news.html: mismo criterio en Latest News (primer panel, ya cubierto por
+   la regla de arriba) y News Archive, el último de la fila. */
+.panels--rounded-heads .panel--aside .panel-head{border-radius:0 5px 0 0}
 .panel{
   position:relative;
   flex:1 1 0;min-width:0;
@@ -411,15 +404,19 @@ img{max-width:100%;display:block}
 .more{color:var(--color-accent);font-weight:700;transition:color .18s}
 .more:hover{color:#d7f28a;text-decoration:underline}
 
-/* lista con flechas */
+/* lista con flechas: chevron verde grueso, sin fondo, como el prototipo.
+   Va como máscara SVG y no como cuadrado rotado con bordes: el prototipo
+   es más alto que ancho (6x9) y un cuadrado rotado sale siempre simétrico,
+   con el ángulo demasiado cerrado. El color lo pone el background, así que
+   sigue dependiendo de --color-accent.                                  */
 .arrow-list{margin:0;padding:0;list-style:none}
-.arrow-list li{position:relative;padding:0 0 12px 15px}
+.arrow-list li{position:relative;padding:0 0 12px 16px}
 .arrow-list li::before{
-  content:"";position:absolute;left:0;top:5px;
-  width:0;height:0;
-  border-left:5px solid var(--color-accent);
-  border-top:4px solid transparent;
-  border-bottom:4px solid transparent;
+  content:"";position:absolute;left:1px;top:8px;
+  width:6px;height:9px;
+  background:var(--color-accent);
+  -webkit-mask:var(--chevron-right) no-repeat center/contain;
+          mask:var(--chevron-right) no-repeat center/contain;
 }
 .arrow-list a{
   font-size:12.4px;color:#dfe9ee;transition:color .18s;
@@ -469,11 +466,17 @@ img{max-width:100%;display:block}
   padding:10px 20px;
   background:linear-gradient(180deg,#15232e 0%,#1a2c38 55%,#213745 100%);
   border-radius:10px;
+  /* sombra interior: hunde la barra y le da profundidad. Sólo inset, para
+     no competir con el halo del ::after que va por fuera. */
+  box-shadow:
+    inset 0 3px 6px rgba(0,0,0,.55),
+    inset 0 1px 0 rgba(0,0,0,.7),
+    inset 0 -1px 0 rgba(255,255,255,.07);
   text-align:center;
 }
 /* halo bajo el footer: tira de 1x31px del prototipo (x650, y829..859),
-   incluye el filo claro del borde inferior — por eso .site-footer ya no
-   lleva box-shadow. Se repite en X, centrada y al 80% del shell.      */
+   incluye el filo claro del borde inferior — por eso el box-shadow de
+   .site-footer es sólo interior. Se repite en X, centrada y al 80%.   */
 .site-footer::after{
   content:"";
   position:absolute;left:10%;width:80%;bottom:-31px;height:31px;
@@ -628,15 +631,8 @@ img{max-width:100%;display:block}
   .callbox{
     position:relative;right:auto;bottom:auto;
     display:flex;align-items:center;justify-content:center;
-    padding-left:0;gap:12px;min-height:auto;
+    min-height:auto;
   }
-  .callbox-glow{
-    right:auto;left:50%;bottom:auto;top:50%;
-    transform:translate(-50%,-50%);
-    width:340px;height:110px;opacity:.5;
-  }
-  .callbox-headset{display:none}
-  .callbox-phone{font-size:23px}
 
   /* sin la ilustración, el botón era el último elemento y quedaba pegado
      al borde: el padding inferior es el que le da aire */
@@ -769,9 +765,8 @@ img{max-width:100%;display:block}
   .top-nav ul{gap:12px;flex-wrap:wrap}
   .brand-text{font-size:23px}
   .brand-mark{width:28px;height:28px}
-  .callbox{flex-direction:column;align-items:center;gap:2px;text-align:center}
-  .callbox-label{font-size:13px}
-  .callbox-phone{font-size:21px}
+  .callbox{align-items:center;text-align:center}
+  .callbox-url{font-size:14px}
 
   .hero{min-height:200px;padding:26px 0 30px}
   .hero-copy{padding:0 18px}
