@@ -328,6 +328,43 @@ img{max-width:100%;display:block}
 .btn-cta:active{transform:translateY(1px);box-shadow:inset 0 2px 4px rgba(0,0,0,.28)}
 .btn-cta-arrow{width:11px;height:11px;flex:none}
 
+/* ---------- foto del hero: teclado mecánico RGB ----------
+   El fondo de la imagen es negro puro, así que se funde solo con el hero
+   sin necesidad de velo; sólo se desvanece el borde izquierdo para que
+   no corte en seco sobre el verde.                                    */
+.hero-shot{
+  position:absolute;right:-20px;bottom:-56px;z-index:2;
+  width:400px;height:auto;
+  -webkit-mask-image:linear-gradient(100deg, transparent 0, #000 150px);
+  mask-image:linear-gradient(100deg, transparent 0, #000 150px);
+  pointer-events:none;
+}
+/* variante para recortes con transparencia real (vista frontal): sin
+   fondo que fundir, sólo un degradado inferior y sombra para asentarla */
+.hero-shot--flat{
+  right:36px;bottom:-8px;
+  width:270px;
+  -webkit-mask-image:linear-gradient(180deg, #000 80%, transparent 100%);
+  mask-image:linear-gradient(180deg, #000 80%, transparent 100%);
+  filter:drop-shadow(0 14px 20px rgba(10,20,4,.35));
+}
+/* espejo horizontal: la imagen original mira a la derecha, y así la
+   pantalla/frente queda orientado hacia el titular en vez de hacia fuera */
+.hero-shot--mirror{transform:scaleX(-1)}
+
+/* setup.png ya viene con transparencia real y a lo ancho: sin fundido
+   lateral (comería la torre), sólo un asiento suave y centrada en el
+   hueco libre del hero en vez de pegada al borde.                    */
+.hero-shot--setup{
+  right:auto;left:56%;bottom:-6px;
+  width:400px;
+  -webkit-mask-image:linear-gradient(180deg, #000 88%, transparent 100%);
+  mask-image:linear-gradient(180deg, #000 88%, transparent 100%);
+}
+
+@media (max-width:940px){
+  .hero-shot{display:none}   /* el hueco desaparece: el hero pasa a apilarse */
+}
 
 /* =========================================================
    PANELES
@@ -357,13 +394,19 @@ img{max-width:100%;display:block}
   flex:1 1 0;min-width:0;
   padding-bottom:26px;
 }
-/* divisor: línea clara + sombra suave a su derecha, como en el original */
+/* divisor: línea clara + sombra suave a su derecha, como en el original.
+   En el prototipo no llega al fondo: plena intensidad hasta ~40% de la
+   altura, se desvanece y muere hacia el 80% (medido en x489, y580..720
+   de la maqueta), así que una máscara vertical apaga línea y sombra a
+   la vez sin tocar el degradado horizontal. */
 .panel + .panel::before{
   content:"";position:absolute;left:0;top:0;bottom:0;width:8px;
   background:
     linear-gradient(90deg,var(--color-divider) 0 1px,
                           rgba(0,0,0,.20) 1px,
                           rgba(0,0,0,0)  100%);
+  -webkit-mask-image:linear-gradient(180deg,#000 40%,transparent 80%);
+  mask-image:linear-gradient(180deg,#000 40%,transparent 80%);
 }
 
 /* ---------- cabecera de panel ----------
@@ -859,6 +902,8 @@ body.chat-modal-open{overflow:hidden}
   .panel--glance{flex:1 1 100%}
   .panel + .panel::before{
     background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,0));
+    /* el degradado ya se desvanece solo: fuera la máscara de escritorio */
+    -webkit-mask-image:none;mask-image:none;
   }
   .panel--chat::before,
   .panel--glance::before{
@@ -966,6 +1011,8 @@ body.chat-modal-open{overflow:hidden}
   .panel + .panel::before{
     left:24px;right:24px;top:0;bottom:auto;width:auto;height:1px;
     background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.14),rgba(255,255,255,0));
+    /* aquí es una línea horizontal: la máscara vertical no pinta nada */
+    -webkit-mask-image:none;mask-image:none;
   }
 }
 
