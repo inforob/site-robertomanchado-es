@@ -434,36 +434,18 @@ img{max-width:100%;display:block}
   flex:1 1 auto;min-height:330px;
   padding:12px 14px 0;
 }
+/* sin borde, sin fondo y sin cabecera: el chat es el propio panel, no una
+   caja dentro de otra. Sólo hereda la monoespaciada.                   */
 .chat{
-  position:absolute;inset:12px 14px 0 14px;
+  position:absolute;inset:4px 4px 0 4px;
   display:flex;flex-direction:column;
-  border:1px solid rgba(255,255,255,.10);
-  border-radius:6px;
-  background:linear-gradient(180deg,rgba(0,0,0,.30) 0%,rgba(0,0,0,.14) 100%);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
-  overflow:hidden;
-  /* toda la conversación en monoespaciada: el aire de máquina de escribir */
   font-family:"SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;
-}
-
-/* barra superior, a juego con el resto de cromo del sitio */
-.chat-bar{
-  display:flex;align-items:center;gap:6px;
-  padding:6px 9px;
-  background:rgba(255,255,255,.05);
-  border-bottom:1px solid rgba(255,255,255,.09);
-}
-.chat-bar i{width:6px;height:6px;border-radius:50%;background:#4a626e;display:block}
-.chat-bar i:first-child{background:var(--color-accent)}
-.chat-bar span{
-  margin-left:4px;font-size:9.5px;letter-spacing:.6px;text-transform:uppercase;
-  color:#8ba3af;
 }
 
 /* ---------- conversación ---------- */
 .chat-log{
   flex:1 1 auto;min-height:0;overflow-y:auto;
-  padding:10px 11px;
+  padding:2px 2px 6px;
   display:flex;flex-direction:column;gap:9px;
   scrollbar-width:thin;scrollbar-color:#3d5765 transparent;
 }
@@ -511,7 +493,7 @@ img{max-width:100%;display:block}
 /* ---------- sugerencias ---------- */
 .chat-suggestions{
   display:flex;flex-wrap:wrap;gap:5px;
-  padding:0 11px 9px;
+  padding:0 2px 8px;
 }
 .chat-chip{
   padding:4px 8px;
@@ -526,13 +508,30 @@ img{max-width:100%;display:block}
   color:#eaf9d0;
 }
 
-/* ---------- entrada ---------- */
+/* ---------- entrada ----------
+   Sólo un filete arriba para separarla del hilo; sin fondo propio. */
 .chat-form{
   display:flex;gap:6px;align-items:center;
-  padding:8px 9px;
+  padding:8px 2px;
   border-top:1px solid rgba(255,255,255,.09);
-  background:rgba(0,0,0,.22);
 }
+/* botón de ampliar a modal */
+.chat-expand{
+  flex:none;width:26px;height:26px;padding:0;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(255,255,255,.16);border-radius:4px;
+  background:rgba(255,255,255,.05);
+  color:#9fb6c2;cursor:pointer;
+  transition:background .18s,color .18s,border-color .18s;
+}
+.chat-expand svg{width:12px;height:12px;display:block}
+.chat-expand:hover{
+  background:rgba(164,214,60,.16);
+  border-color:rgba(164,214,60,.45);
+  color:#eaf9d0;
+}
+/* dentro del modal ya no tiene sentido: el modal es el estado ampliado */
+.chat-modal .chat-expand{display:none}
 .chat-input{
   flex:1 1 auto;min-width:0;
   height:28px;padding:0 9px;
@@ -559,6 +558,75 @@ img{max-width:100%;display:block}
   .chat-caret{animation:none}
   .chat-spinner{animation-duration:2s}
 }
+
+/* ---------- modal del chat ----------
+   El JS mueve aquí dentro el propio .chat, por eso hay que devolverle el
+   flujo normal: en el panel va absoluto.                              */
+/* z-index por encima de los FAB flotantes (70/71) y del popup del menú
+   móvil (80): mientras el diálogo está abierto, manda él */
+.chat-modal{position:fixed;inset:0;z-index:90;display:flex}
+.chat-modal[hidden]{display:none}
+.chat-modal-backdrop{
+  position:absolute;inset:0;
+  background:rgba(6,14,20,.72);
+  backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);
+  animation:chat-fade .18s ease-out;
+}
+.chat-modal-box{
+  position:relative;margin:auto;
+  width:min(720px, calc(100% - 32px));
+  height:min(560px, calc(100% - 48px));
+  display:flex;flex-direction:column;
+  background:var(--color-panel);
+  border:1px solid var(--color-panel-edge);
+  border-radius:8px;
+  box-shadow:inset 0 1px 0 var(--color-panel-hi), 0 24px 60px rgba(0,0,0,.55);
+  overflow:hidden;
+  animation:chat-rise .2s cubic-bezier(.2,.7,.3,1);
+}
+@keyframes chat-fade{from{opacity:0}}
+@keyframes chat-rise{from{opacity:0;transform:translateY(10px)}}
+
+.chat-modal-head{
+  display:flex;align-items:center;
+  height:43px;padding:0 12px 0 20px;
+  background:url("../assets/head-fill.png") repeat-x 0 0;
+}
+.chat-modal-head h3{
+  margin:0;font-size:19px;line-height:1;color:#fff;font-weight:400;
+  text-shadow:0 1px 2px rgba(0,0,0,.5);
+}
+.chat-modal-head .thin{font-weight:400;color:#b2c4d0}
+.chat-modal-head .bold{font-weight:700}
+.chat-modal-close{
+  margin-left:auto;
+  width:26px;height:26px;padding:0;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(255,255,255,.16);border-radius:4px;
+  background:rgba(255,255,255,.06);
+  color:#c3d5de;cursor:pointer;
+  transition:background .18s,color .18s,border-color .18s;
+}
+.chat-modal-close svg{width:12px;height:12px;display:block}
+.chat-modal-close:hover{
+  background:rgba(164,214,60,.18);border-color:rgba(164,214,60,.45);color:#fff;
+}
+
+.chat-modal-body{flex:1 1 auto;min-height:0;display:flex;padding:14px 20px 12px}
+.chat-modal-body .chat{position:static;inset:auto;flex:1 1 auto;min-width:0}
+/* con sitio de sobra, el hilo respira más */
+.chat-modal-body .chat-msg{max-width:82%;font-size:12.6px}
+.chat-modal-body .chat-chip{font-size:11px;padding:5px 10px}
+.chat-modal-body .chat-input{height:32px;font-size:12.4px}
+
+/* el botón de ampliar sobra en pantallas donde el chat ya es ancho */
+@media (max-width:640px){
+  .chat-modal-box{height:calc(100% - 24px);width:calc(100% - 16px)}
+  .chat-modal-body{padding:12px 14px 10px}
+}
+
+/* bloquea el scroll del fondo mientras el modal está abierto */
+body.chat-modal-open{overflow:hidden}
 
 /* =========================================================
    FOOTER

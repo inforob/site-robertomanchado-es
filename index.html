@@ -138,16 +138,20 @@
         </header>
         <div class="panel-body">
           <div class="chat" id="cvChat">
-            <div class="chat-bar" aria-hidden="true">
-              <i></i><i></i><i></i><span>cv-assistant</span>
-            </div>
-
             <div class="chat-log" id="chatLog" role="log" aria-live="polite"
                  aria-label="Conversación con el asistente del CV"></div>
 
             <div class="chat-suggestions" id="chatSuggestions"></div>
 
             <form class="chat-form" id="chatForm">
+              <button class="chat-expand" id="chatExpand" type="button"
+                      aria-label="Ampliar el chat" title="Ampliar">
+                <svg viewBox="0 0 12 12" aria-hidden="true">
+                  <path d="M7 1 H11 V5 M11 1 L6.6 5.4 M5 11 H1 V7 M1 11 L5.4 6.6"
+                        fill="none" stroke="currentColor" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
               <input class="chat-input" id="chatInput" type="text" autocomplete="off"
                      placeholder="Pregunta por el CV…" aria-label="Escribe tu pregunta">
               <button class="chat-send" type="submit" aria-label="Enviar pregunta">
@@ -172,6 +176,25 @@
       </p>
     </footer>
 
+  </div>
+</div>
+
+<!-- ==================== MODAL DEL CHAT ====================
+     Vacío a propósito: al ampliar, el JS mueve aquí el propio #cvChat,
+     así la conversación continúa sin perder estado ni listeners.   -->
+<div class="chat-modal" id="chatModal" hidden>
+  <div class="chat-modal-backdrop" data-chat-close></div>
+  <div class="chat-modal-box" role="dialog" aria-modal="true" aria-label="Ask my CV">
+    <div class="chat-modal-head">
+      <h3><span class="thin">Ask my</span> <span class="bold">CV</span></h3>
+      <button class="chat-modal-close" type="button" data-chat-close aria-label="Cerrar el chat">
+        <svg viewBox="0 0 12 12" aria-hidden="true">
+          <path d="M2 2 L10 10 M10 2 L2 10" fill="none" stroke="currentColor"
+                stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="chat-modal-body" id="chatModalSlot"></div>
   </div>
 </div>
 

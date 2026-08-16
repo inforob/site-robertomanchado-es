@@ -18,10 +18,25 @@
   var form        = document.getElementById('chatForm');
   var input       = document.getElementById('chatInput');
   var sendBtn     = form.querySelector('.chat-send');
+  var expandBtn   = document.getElementById('chatExpand');
   var chipsWrap   = document.getElementById('chatSuggestions');
+  var modal       = document.getElementById('chatModal');
+  var modalSlot   = document.getElementById('chatModalSlot');
+  var panelSlot   = root.parentNode;          // el .panel-body de origen
 
   var reduced = window.matchMedia &&
                 window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  /* Ritmo de escritura. En el panel el hueco es pequeño, así que se teclea
+     despacio para que dé tiempo a leer; en el modal, algo más suelto.
+     Milisegundos por carácter: */
+  var SPEED_PANEL = 34;
+  var SPEED_MODAL = 22;
+  /* pausas extra al cerrar frase o salto de línea, para dar respiración */
+  var PAUSE_PUNCT = 220;
+  var PAUSE_BREAK = 320;
+
+  var typingTimer = null;
 
   /* ---------------------------------------------------------
      Base de conocimiento
@@ -268,13 +283,16 @@
     el.insertBefore(buffer, caret);
 
     (function step() {
-      // varios caracteres por tick: a uno por tick un párrafo largo eterniza
-      i = Math.min(i + 2, text.length);
+      var ch = text.charAt(i);
+      i += 1;
       buffer.nodeValue = text.slice(0, i);
       scrollToEnd();
 
       if (i < text.length) {
-        window.setTimeout(step, 12);
+        var wait = isOpen() ? SPEED_MODAL : SPEED_PANEL;
+        if (ch === '\n') { wait += PAUSE_BREAK; }
+        else if (ch === '.' || ch === ':') { wait += PAUSE_PUNCT; }
+        typingTimer = window.setTimeout(step, wait);
       } else {
         el.removeChild(caret);
         if (done) done();
@@ -329,6 +347,59 @@
     b.addEventListener('click', function () { ask(chip.q); });
     chipsWrap.appendChild(b);
   });
+
+  /* ---------------------------------------------------------
+     Modal: no se duplica nada, se muda el propio #cvChat.
+     Así el hilo, el estado y los listeners siguen intactos.
+     --------------------------------------------------------- */
+  function isOpen() { return modal && !modal.hidden; }
+
+  var lastFocus = null;
+
+  function openModal() {
+    if (!modal || isOpen()) return;
+    lastFocus = document.activeElement;
+    modalSlot.appendChild(root);
+    modal.hidden = false;
+    document.body.classList.add('chat-modal-open');
+    scrollToEnd();
+    if (!busy) input.focus();
+  }
+
+  function closeModal() {
+    if (!isOpen()) return;
+    panelSlot.appendChild(root);
+    modal.hidden = true;
+    document.body.classList.remove('chat-modal-open');
+    scrollToEnd();
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  if (expandBtn) expandBtn.addEventListener('click', openModal);
+
+  if (modal) {
+    modal.querySelectorAll('[data-chat-close]').forEach(function (el) {
+      el.addEventListener('click', closeModal);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && isOpen()) closeModal();
+    });
+    /* el foco no debe escaparse del diálogo mientras está abierto */
+    modal.addEventListener('keydown', function (e) {
+      if (e.key !== 'Tab') return;
+      var focusables = modal.querySelectorAll(
+        'button:not([disabled]), input:not([disabled])'
+      );
+      if (!focusables.length) return;
+      var first = focusables[0];
+      var last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault(); last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault(); first.focus();
+      }
+    });
+  }
 
   /* ---------- saludo inicial ---------- */
   addBot(GREETING);
