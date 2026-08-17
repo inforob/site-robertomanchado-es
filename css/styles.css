@@ -327,6 +327,7 @@ img{max-width:100%;display:block}
 .btn-cta:hover{filter:brightness(1.08)}
 .btn-cta:active{transform:translateY(1px);box-shadow:inset 0 2px 4px rgba(0,0,0,.28)}
 .btn-cta-arrow{width:11px;height:11px;flex:none}
+.btn-cta-cart{width:15px;height:15px;flex:none}
 
 /* ---------- foto del hero: teclado mecánico RGB ----------
    El fondo de la imagen es negro puro, así que se funde solo con el hero
@@ -863,6 +864,109 @@ body.chat-modal-open{overflow:hidden}
 }
 
 /* =========================================================
+   SECCIÓN DE LIBROS (books.html)
+   No es un catálogo: son dos fichas de producto a ancho
+   completo, con el detalle que uno espera en una tienda.
+   ========================================================= */
+.panel--books{flex:1 1 100%}
+/* es el único panel de la sección: coincide a la vez con first-child y
+   last-child, así que sin esta regla más específica gana la del último
+   (sólo arriba-derecha). Aquí queremos sólo el lado izquierdo, como el
+   primer panel de index.html. */
+.panels--rounded-heads .panel.panel--books .panel-head{border-radius:5px 0 0 5px}
+
+.books-lead{
+  margin:0 0 22px;padding-bottom:18px;
+  border-bottom:1px solid rgba(255,255,255,.10);
+  font-size:13px;line-height:1.6;color:#bccbd4;max-width:640px;
+}
+.books-lead strong{color:#fff;font-weight:700}
+
+/* ---------- ficha de producto ---------- */
+.book{
+  display:flex;gap:30px;
+  padding-bottom:28px;margin-bottom:28px;
+  border-bottom:1px solid rgba(255,255,255,.10);
+}
+.book:last-of-type{border-bottom:0;margin-bottom:8px;padding-bottom:6px}
+
+/* --- portada --- */
+.book-media{flex:0 0 210px;width:210px}
+.book-cover{
+  display:block;
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 8px 22px rgba(0,0,0,.5);
+}
+.book-cover svg,.book-cover img{width:100%;height:auto;display:block}
+.book-media .btn-cta{margin-top:16px;width:100%;justify-content:space-between}
+
+/* --- columna de detalle --- */
+.book-detail{min-width:0;flex:1 1 auto}
+.book-title{
+  margin:0 0 4px;
+  font-size:24px;line-height:1.15;font-weight:700;color:#fff;
+  letter-spacing:-.3px;
+}
+.book-sub{margin:0 0 8px;font-size:14px;line-height:1.4;color:#a4d63c;font-weight:600}
+.book-author{margin:0 0 14px;font-size:12.5px;color:#8fa6b1}
+.book-author strong{color:#e6eef2;font-weight:600}
+
+/* especificaciones tipo ficha técnica — badges con icono, al estilo
+   de la ficha de producto de Amazon (icono + etiqueta + valor) */
+.book-specs{
+  display:flex;flex-wrap:wrap;gap:18px 26px;
+  margin:0 0 18px;padding:14px 0;
+  border-top:1px solid rgba(255,255,255,.10);
+  border-bottom:1px solid rgba(255,255,255,.10);
+  list-style:none;
+}
+.book-specs li{
+  display:flex;flex-direction:column;align-items:center;
+  gap:6px;width:88px;text-align:center;
+}
+.book-specs b{
+  font-size:10px;font-weight:700;letter-spacing:.3px;
+  line-height:1.25;color:#cfdce3;
+}
+.book-specs svg{
+  width:22px;height:22px;
+  stroke:var(--color-accent);fill:none;
+  stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;
+}
+.book-specs span{
+  font-size:11.5px;font-weight:700;line-height:1.3;color:#fff;
+}
+
+.book-desc{margin:0 0 12px;font-size:13px;line-height:1.65;color:#c6d4dc}
+.book-desc + .book-desc{margin-bottom:16px}
+
+.book-section-title{
+  margin:18px 0 10px;
+  font-size:13px;font-weight:700;color:#fff;
+  padding-bottom:6px;
+  border-bottom:1px solid rgba(255,255,255,.12);
+}
+
+/* índice del libro a dos columnas */
+.book-toc{
+  columns:2;column-gap:26px;
+  margin:0;padding:0;list-style:none;
+  font-size:12.5px;
+}
+.book-toc li{
+  break-inside:avoid;
+  padding:4px 0 4px 16px;position:relative;
+  color:#bccbd4;line-height:1.45;
+}
+.book-toc li::before{
+  content:"";position:absolute;left:0;top:10px;
+  width:0;height:0;
+  border-left:4px solid var(--color-accent);
+  border-top:3px solid transparent;
+  border-bottom:3px solid transparent;
+}
+
+/* =========================================================
    RESPONSIVE — TABLET
    ========================================================= */
 @media (max-width:1000px){
@@ -1077,6 +1181,25 @@ body.chat-modal-open{overflow:hidden}
   .pager{flex-wrap:wrap;justify-content:center}
   .subscribe-form{flex-direction:column;align-items:stretch}
   .btn-cta--sm{justify-content:space-between}
+}
+
+/* =========================================================
+   RESPONSIVE — SECCIÓN DE LIBROS
+   ========================================================= */
+@media (max-width:860px){
+  .book-media{flex:0 0 168px;width:168px}
+  .book{gap:22px}
+  .book-title{font-size:21px}
+  .book-toc{columns:1}
+}
+
+@media (max-width:620px){
+  /* la portada pasa arriba y centrada: en vertical no cabe al lado */
+  .book{flex-direction:column;gap:18px}
+  .book-media{flex:0 0 auto;width:100%;max-width:200px;margin:0 auto}
+  .book-title{font-size:19px}
+  .book-specs{justify-content:center;gap:16px 20px}
+  .book-specs li{width:calc(33.333% - 14px)}
 }
 
 /* =========================================================

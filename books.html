@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Books — R.Manchado</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="page">
+  <div class="shell">
+
+    <!-- ==================== HEADER ==================== -->
+    <header class="site-header">
+      <div class="header-waves" aria-hidden="true">
+        <svg viewBox="0 0 940 112" preserveAspectRatio="none">
+          <path d="M0,86 C160,40 300,104 460,72 C620,40 780,96 940,58 L940,112 L0,112 Z" fill="#ffffff" opacity=".025"/>
+          <path d="M0,64 C180,110 320,26 500,54 C680,82 800,30 940,46" fill="none" stroke="#ffffff" stroke-opacity=".05" stroke-width="1"/>
+          <path d="M0,52 C200,96 340,16 520,44 C700,72 820,20 940,34" fill="none" stroke="#ffffff" stroke-opacity=".035" stroke-width="1"/>
+        </svg>
+      </div>
+
+      <!-- navegación secundaria superior -->
+      <nav class="top-nav" aria-label="Navegación secundaria">
+        <ul>
+          <li><a href="index.html"><span class="chev" aria-hidden="true"></span>HOME</a></li>
+          <li><a href="#"><span class="chev" aria-hidden="true"></span>SITEMAP</a></li>
+          <li><a href="#"><span class="chev" aria-hidden="true"></span>CONTACT US</a></li>
+        </ul>
+      </nav>
+
+      <!-- logo -->
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40">
+            <defs>
+              <linearGradient id="leafG" x1="0" y1="1" x2="1" y2="0">
+                <stop offset="0" stop-color="#3f7d10"/>
+                <stop offset=".45" stop-color="#7fbe22"/>
+                <stop offset="1" stop-color="#c6e94b"/>
+              </linearGradient>
+            </defs>
+            <path d="M4 33 C6 16 18 5 36 4 C34 20 24 31 8 33 Z" fill="url(#leafG)"/>
+            <path d="M6 33 C14 22 24 13 35 6" fill="none" stroke="#2c5c0b" stroke-width="1.6" opacity=".55"/>
+            <path d="M13 30 C15 22 20 15 27 10" fill="none" stroke="#eaffb0" stroke-width="1" opacity=".45"/>
+          </svg>
+        </span>
+        <span class="brand-text"><span class="brand-light">R.</span><span class="brand-bold">Manchado</span></span>
+      </a>
+
+      <!-- bloque de contacto: la URL de GitHub -->
+      <div class="callbox">
+        <a class="callbox-url" href="https://github.com/inforob-sf/"
+           target="_blank" rel="noopener">https://github.com/inforob-sf/</a>
+      </div>
+    </header>
+
+    <!-- ==================== MENÚ PRINCIPAL ==================== -->
+    <div class="mainnav-wrap">
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav">
+        <span class="nav-toggle-bars" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>MENU</span>
+      </button>
+      <nav class="mainnav" id="mainNav" aria-label="Navegación principal">
+        <ul>
+          <li><a href="index.html">ABOUT US</a></li>
+          <li><a href="#">SERVICES</a></li>
+          <li><a href="books.html" class="is-active">BOOKS</a></li>
+          <li><a href="#">DEALERS</a></li>
+          <li><a href="#">CAREERS</a></li>
+          <li><a href="news.html">NEWS</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- ==================== BANDA DE TÍTULO ==================== -->
+    <section class="hero hero--page">
+      <div class="hero-waves" aria-hidden="true">
+        <svg viewBox="0 0 940 118" preserveAspectRatio="none">
+          <g fill="none" stroke="#ffffff" stroke-opacity=".3">
+            <path d="M-20,70 C160,18 300,72 470,42 C640,12 790,40 960,10" stroke-width="1.2"/>
+            <path d="M-20,80 C160,28 300,82 470,52 C640,22 790,50 960,20" stroke-width="1"/>
+            <path d="M-20,90 C160,38 300,92 470,62 C640,32 790,60 960,30" stroke-width=".9"/>
+            <path d="M-20,101 C160,49 300,102 470,72 C640,42 790,70 960,40" stroke-width=".8"/>
+          </g>
+          <path d="M-20,96 C150,40 310,98 480,62 C650,26 800,54 960,24 L960,0 L-20,0 Z" fill="#ffffff" opacity=".05"/>
+          <path d="M-20,112 C170,58 300,114 470,80 C640,46 800,72 960,44" fill="none" stroke="#dbff7a" stroke-opacity=".22" stroke-width="2"/>
+        </svg>
+      </div>
+
+      <div class="pagehead">
+        <h1 class="pagehead-title">Books</h1>
+        <nav class="breadcrumb" aria-label="Migas de pan">
+          <a href="index.html">Home</a>
+          <span class="breadcrumb-sep" aria-hidden="true"></span>
+          <span aria-current="page">Books</span>
+        </nav>
+      </div>
+
+      <!-- ilustración: pila de libros -->
+      <div class="pagehead-art" aria-hidden="true">
+        <svg viewBox="0 0 300 118">
+          <defs>
+            <linearGradient id="bookG1" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#5b8296"/><stop offset="1" stop-color="#31505f"/>
+            </linearGradient>
+            <linearGradient id="bookG2" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#a4d63c"/><stop offset="1" stop-color="#5f8f13"/>
+            </linearGradient>
+            <linearGradient id="bookG3" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#c9d0d4"/><stop offset="1" stop-color="#8d979c"/>
+            </linearGradient>
+          </defs>
+          <!-- tomos apilados -->
+          <g transform="translate(150,58)">
+            <rect width="120" height="16" rx="2" fill="url(#bookG1)"/>
+            <rect x="6" y="5" width="46" height="2.4" fill="#ffffff" opacity=".45"/>
+          </g>
+          <g transform="translate(156,42)">
+            <rect width="108" height="16" rx="2" fill="url(#bookG3)"/>
+            <rect x="6" y="5" width="38" height="2.4" fill="#39424a" opacity=".55"/>
+          </g>
+          <g transform="translate(148,26)">
+            <rect width="114" height="16" rx="2" fill="url(#bookG2)"/>
+            <rect x="6" y="5" width="42" height="2.4" fill="#213c05" opacity=".5"/>
+          </g>
+          <!-- tomo abierto en pie -->
+          <g transform="translate(52,32)">
+            <path d="M0 8 L34 0 L34 52 L0 60 Z" fill="#e8ecee"/>
+            <path d="M68 8 L34 0 L34 52 L68 60 Z" fill="#c9d0d4"/>
+            <path d="M34 0 L34 52" stroke="#8d979c" stroke-width="1.2"/>
+            <g stroke="#a9b2b7" stroke-width="1.4">
+              <path d="M6 16 L28 11 M6 24 L28 19 M6 32 L28 27"/>
+              <path d="M62 16 L40 11 M62 24 L40 19 M62 32 L40 27"/>
+            </g>
+          </g>
+          <ellipse cx="205" cy="80" rx="66" ry="6" fill="#1d2b0c" opacity=".26"/>
+          <ellipse cx="86" cy="96" rx="46" ry="6" fill="#1d2b0c" opacity=".26"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ==================== CONTENIDO ==================== -->
+    <section class="panels panels--rounded-heads">
+
+      <article class="panel panel--books">
+        <header class="panel-head">
+          <h2><span class="thin">My</span> <span class="bold">Books</span></h2>
+        </header>
+
+        <div class="panel-body">
+          <p class="books-lead">
+            Two books self-published on <strong>Amazon KDP</strong>, written from
+            hands-on practice: one on actually working with Claude Code, the other on
+            selling on Vinted without wasting time or money.
+          </p>
+
+          <!-- ================= BOOK 1 ================= -->
+          <article class="book">
+            <div class="book-media">
+              <a class="book-cover" href="#" target="_blank" rel="noopener"
+                 aria-label="View &laquo;Claude Code para desarrolladores&raquo; on Amazon">
+                <img src="books/claude-book.png" alt="Cover of Claude Code para desarrolladores, by Roberto Manchado Oliva">
+              </a>
+
+              <a class="btn-cta btn-cta--sm" href="#" target="_blank" rel="noopener">
+                <span>BUY ON AMAZON</span>
+                <svg class="btn-cta-cart" viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="9" cy="20" r="1.4" fill="#2f5c05"/>
+                  <circle cx="18" cy="20" r="1.4" fill="#2f5c05"/>
+                  <path d="M2 3h2.5l2.1 11.3a2 2 0 0 0 2 1.7h8a2 2 0 0 0 2-1.6L21 7H5.3"
+                        fill="none" stroke="#2f5c05" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </div>
+
+            <div class="book-detail">
+              <h3 class="book-title">Claude Code para desarrolladores</h3>
+              <p class="book-sub">Advanced Artificial Intelligence and Efficient Programming</p>
+              <p class="book-author">by <strong>Roberto Manchado Oliva</strong></p>
+
+              <ul class="book-specs">
+                <li>
+                  <b>Print<br>length</b>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M8 8h5M8 12h8M8 16h8"/></svg>
+                  <span>308 pages</span>
+                </li>
+                <li>
+                  <b>Language</b>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.8 2.4 4.2 5.6 4.2 9s-1.4 6.6-4.2 9c-2.8-2.4-4.2-5.6-4.2-9s1.4-6.6 4.2-9Z"/></svg>
+                  <span>Spanish</span>
+                </li>
+                <li>
+                  <b>Publication<br>date</b>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M3 9.5h18M8 3v4M16 3v4"/></svg>
+                  <span>March 5, 2026</span>
+                </li>
+                <li>
+                  <b>Dimensions</b>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2" width="6" height="20" rx="1"/></svg>
+                  <span>15.24 x 1.78<br>x 22.86 cm</span>
+                </li>
+                <li>
+                  <b>ISBN-13</b>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4v16M7 4v16M9 4v16M12 4v16M14 4v16M17 4v16M20 4v16" stroke-width="1.3"/></svg>
+                  <span>979-8244561852</span>
+                </li>
+              </ul>
+
+              <p class="book-desc">
+                Claude Code is not just another autocomplete: it's an agent that reads
+                your repository, runs commands and edits files. This book teaches you to
+                work with it the way you'd work with a teammate — giving it context,
+                boundaries and a way to verify what it does.
+              </p>
+              <p class="book-desc">
+                Written by a backend developer with over fifteen years in production,
+                it goes straight to what actually changes your output: how to structure
+                <em>CLAUDE.md</em>, when to delegate to subagents, how to review the code
+                it generates, and which tasks are not worth automating yet.
+              </p>
+
+              <h4 class="book-section-title">What you'll learn</h4>
+              <ul class="book-toc">
+                <li>Installation, permissions and your first project</li>
+                <li>Writing a CLAUDE.md the agent actually follows</li>
+                <li>Real work prompts vs. toy prompts</li>
+                <li>Long sessions: context, plans and checkpoints</li>
+                <li>Hooks, custom commands and skills</li>
+                <li>Large refactors on legacy code</li>
+                <li>Tests, review and quality control</li>
+                <li>Git, branches and assisted pull requests</li>
+                <li>Integrating MCP and external tools</li>
+                <li>Common mistakes and how to get out of them</li>
+              </ul>
+
+              <h4 class="book-section-title">Who it's for</h4>
+              <p class="book-desc">
+                For developers with real projects on their hands —backend, frontend or
+                full-stack— who have already tried AI and want to move from one-off
+                tricks to a sustained method. No prior experience with agents required.
+              </p>
+            </div>
+          </article>
+
+          <!-- ================= BOOK 2 ================= -->
+          <article class="book">
+            <div class="book-media">
+              <a class="book-cover" href="#" target="_blank" rel="noopener"
+                 aria-label="View &laquo;Cómo vender con éxito en Vinted&raquo; on Amazon">
+                <svg viewBox="0 0 210 315" role="img" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="vtBg" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0" stop-color="#1f7a63"/>
+                      <stop offset="1" stop-color="#0c3a2f"/>
+                    </linearGradient>
+                  </defs>
+                  <rect width="210" height="315" fill="url(#vtBg)"/>
+                  <rect x="0" y="0" width="13" height="315" fill="#082a22"/>
+                  <rect x="13" y="0" width="2" height="315" fill="#ffffff" opacity=".08"/>
+                  <!-- hanger + price tag -->
+                  <g transform="translate(46,168)" fill="none" stroke="#d9f7ea" stroke-width="3">
+                    <path d="M60 18 C60 8 52 4 46 8 C41 11 41 17 45 20 L45 26"/>
+                    <path d="M45 26 L10 54 L80 54 Z"/>
+                  </g>
+                  <g transform="translate(112,196)">
+                    <path d="M0 10 L26 0 L46 20 L20 30 Z" fill="#ffd66b"/>
+                    <circle cx="12" cy="12" r="4" fill="#0c3a2f"/>
+                  </g>
+                  <text x="30" y="64" fill="#ffffff" font-family="Source Sans 3, sans-serif" font-size="21" font-weight="700">Cómo vender</text>
+                  <text x="30" y="90" fill="#ffffff" font-family="Source Sans 3, sans-serif" font-size="21" font-weight="700">con éxito en</text>
+                  <text x="30" y="122" fill="#ffd66b" font-family="Source Sans 3, sans-serif" font-size="30" font-weight="700">Vinted</text>
+                  <rect x="30" y="132" width="52" height="3" fill="#ffd66b"/>
+                  <text x="30" y="298" fill="#d9f7ea" font-family="Source Sans 3, sans-serif" font-size="10" letter-spacing="1.4">ROBERTO MANCHADO OLIVA</text>
+                </svg>
+              </a>
+
+              <a class="btn-cta btn-cta--sm" href="#" target="_blank" rel="noopener">
+                <span>BUY ON AMAZON</span>
+                <svg class="btn-cta-cart" viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="9" cy="20" r="1.4" fill="#2f5c05"/>
+                  <circle cx="18" cy="20" r="1.4" fill="#2f5c05"/>
+                  <path d="M2 3h2.5l2.1 11.3a2 2 0 0 0 2 1.7h8a2 2 0 0 0 2-1.6L21 7H5.3"
+                        fill="none" stroke="#2f5c05" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </div>
+
+            <div class="book-detail">
+              <h3 class="book-title">Cómo vender con éxito en Vinted</h3>
+              <p class="book-sub">From clearing out your closet to selling consistently</p>
+              <p class="book-author">by <strong>Roberto Manchado Oliva</strong></p>
+
+              <ul class="book-specs">
+                <li>
+                  <b>Print<br>length</b>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M8 8h5M8 12h8M8 16h8"/></svg>
+                  <span>— pages</span>
+                </li>
+                <li>
+                  <b>Language</b>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.8 2.4 4.2 5.6 4.2 9s-1.4 6.6-4.2 9c-2.8-2.4-4.2-5.6-4.2-9s1.4-6.6 4.2-9Z"/></svg>
+                  <span>Spanish</span>
+                </li>
+                <li>
+                  <b>Publication<br>date</b>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M3 9.5h18M8 3v4M16 3v4"/></svg>
+                  <span>—</span>
+                </li>
+                <li>
+                  <b>Dimensions</b>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2" width="6" height="20" rx="1"/></svg>
+                  <span>— x — <br>x — cm</span>
+                </li>
+                <li>
+                  <b>ISBN-13</b>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4v16M7 4v16M9 4v16M12 4v16M14 4v16M17 4v16M20 4v16" stroke-width="1.3"/></svg>
+                  <span>—</span>
+                </li>
+              </ul>
+
+              <p class="book-desc">
+                Posting an item on Vinted is easy; selling it isn't. The difference comes
+                down to specifics: the photo, the headline, the starting price, the time
+                you post, and how you respond to a haggler.
+              </p>
+              <p class="book-desc">
+                This guide lays out that method step by step, with real examples of
+                listings that work and ones that don't. No get-rich-quick promises: a
+                repeatable system so your items get seen, get sold, and reach the buyer
+                in good shape.
+              </p>
+
+              <h4 class="book-section-title">What you'll learn</h4>
+              <ul class="book-toc">
+                <li>Preparing and picking what actually sells</li>
+                <li>Photography with natural light, no studio needed</li>
+                <li>Titles and descriptions that surface in search</li>
+                <li>Pricing: margin, shipping and fees</li>
+                <li>When to post and how often to renew</li>
+                <li>Negotiating offers without giving the item away</li>
+                <li>Shipping, packaging and timing</li>
+                <li>Reviews, returns and disputes</li>
+                <li>Spotting problem buyers</li>
+                <li>Scaling to regular selling without burning out</li>
+              </ul>
+
+              <h4 class="book-section-title">Who it's for</h4>
+              <p class="book-desc">
+                For anyone starting out who wants to get it right from the first listing,
+                and for sellers who are already active but have hit a plateau and can't
+                figure out why their items stopped getting views.
+              </p>
+            </div>
+          </article>
+
+        </div>
+      </article>
+
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="site-footer">
+      <p>
+        Copyright &copy; 2026 Roberto Manchado
+        <span class="sep">|</span>
+        <a href="mailto:desarrollos@robertomanchado.es" style="color:var(--color-accent)">desarrollos@robertomanchado.es</a>
+      </p>
+    </footer>
+
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
